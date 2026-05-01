@@ -47,7 +47,7 @@ public readonly struct DoubleBits
         return new DoubleBits(sign, exponent, mantissa);
     }
 
-    public static ulong DoubleToBits(double value)
+    private static ulong DoubleToBits(double value)
     {
         if (double.IsNaN(value)) return 0x7FF8000000000000UL;
         if (double.IsPositiveInfinity(value)) return 0x7FF0000000000000UL;
@@ -120,7 +120,7 @@ public readonly struct DoubleBits
         return ((ulong)sign << 63) | ((ulong)biasedExponent << 52) | finalMantissa;
     }
 
-    public static double BitsToDouble(ulong bits)
+    private static double BitsToDouble(ulong bits)
     {
         int sign = (int)(bits >> 63);
         int exponent = (int)((bits >> 52) & 0x7FF);

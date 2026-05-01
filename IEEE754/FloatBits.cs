@@ -47,7 +47,7 @@ public readonly struct FloatBits
         return new FloatBits(sign, exponent, mantissa);
     }
 
-    public static uint FloatToBits(float value)
+    private static uint FloatToBits(float value)
     {
         if (float.IsNaN(value)) return 0x7FC00000u;
         if (float.IsPositiveInfinity(value)) return 0x7F800000u;
@@ -120,7 +120,7 @@ public readonly struct FloatBits
         return ((uint)sign << 31) | ((uint)biasedExponent << 23) | finalMantissa;
     }
 
-    public static float BitsToFloat(uint bits)
+    private static float BitsToFloat(uint bits)
     {
         int sign = (int)(bits >> 31);
         int exponent = (int)((bits >> 23) & 0xFF);
