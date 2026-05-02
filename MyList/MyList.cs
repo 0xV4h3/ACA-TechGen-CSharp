@@ -44,8 +44,8 @@ public class MyList
 
         for (int i = index; i < Count - 1; i++)
             _items[i] = _items[i + 1];
-
-        Count--;
+        
+        _items[--Count] = 0;
         return true;
     }
 
