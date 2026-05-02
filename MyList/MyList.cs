@@ -14,6 +14,12 @@ public class MyList
                 throw new ArgumentOutOfRangeException(nameof(index));
             return _items[index];
         }
+        set
+        {
+            if (index < 0 || index >= Count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+            _items[index] = value;
+        }
     }
 
     public void Add(int item)
