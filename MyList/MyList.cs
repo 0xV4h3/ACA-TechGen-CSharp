@@ -58,7 +58,7 @@ public class MyList
     public bool TryGet(int index, out int item)
     {
         item = -1;
-        if (index < 0 && index > Count) return false;
+        if (index < 0 || index >= Count) return false;
         item = _items[index];
         return true;
     }
