@@ -22,7 +22,7 @@ This course covers the following modules:
 
 ## Repository Structure & Workflow
 
-- All assignments and module projects reside within a single solution.
+- Each assignment or module is contained in its own solution.
 - Each new homework or module is developed on a separate Git branch.
 - After completing an assignment, a pull request (PR) is created for code review.
 - Upon approval, the task branch is merged into `master`.
