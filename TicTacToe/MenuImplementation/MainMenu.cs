@@ -5,7 +5,7 @@ namespace MenuImplementation;
 // MainMenu.cs
 public class MainMenu : Menu
 {
-    public MainMenu() : base("Main Menu")
+    public MainMenu() : base(MenuTitles.MainMenuTitle)
     {
         ConfigureOptionSize(3);
         AddOption("1", "Play");

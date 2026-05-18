@@ -4,7 +4,7 @@ namespace MenuImplementation;
 
 public class SettingsMenu : Menu
 {
-    public SettingsMenu() : base("Settings")
+    public SettingsMenu() : base(MenuTitles.SettingsMenuTitle)
     {
         ConfigureOptionSize(3);
         AddOption("1", "Change Username");
@@ -19,17 +19,17 @@ public class SettingsMenu : Menu
             case "1":
                 Console.Write("Enter new username: ");
                 var name = Console.ReadLine();
-                if(!string.IsNullOrWhiteSpace(name)) GameSetupConfig.Username = name;
+                if(!string.IsNullOrWhiteSpace(name)) GameState.Username = name;
                 return NavigationResult.Wait();
             case "2":
-                GameSetupConfig.UseWASD = !GameSetupConfig.UseWASD;
-                Console.WriteLine($"WASD Enabled: {GameSetupConfig.UseWASD}");
+                GameState.UseWASD = !GameState.UseWASD;
+                Console.WriteLine($"WASD Enabled: {GameState.UseWASD}");
                 return NavigationResult.Wait();
             case "3":
                 Console.Write("Choose default sign (X/O): ");
                 var sign = Console.ReadLine();
                 if (sign is not null && (sign.ToUpper() == "X" || sign.ToUpper() == "O"))
-                    GameSetupConfig.PlayerSign = sign.ToUpper()[0];
+                    GameState.PlayerSign = sign.ToUpper()[0];
                 return NavigationResult.Wait();
         }
         return NavigationResult.None();

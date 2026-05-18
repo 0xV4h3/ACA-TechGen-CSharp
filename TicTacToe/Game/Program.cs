@@ -1,7 +1,7 @@
 ﻿using MenuLib;
 using MenuImplementation;
 
-namespace TicTacToe;
+namespace Game;
 
 class Program
 {
@@ -16,7 +16,7 @@ class Program
             if (!string.IsNullOrEmpty(name)) break;
             Console.Write("Invalid. Enter your username: ");
         }
-        GameSetupConfig.Username = name;
+        GameState.Username = name;
         
         var root = new MainMenu();
         MenuRunner.Run(root);

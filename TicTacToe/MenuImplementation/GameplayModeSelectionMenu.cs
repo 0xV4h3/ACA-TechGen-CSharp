@@ -4,7 +4,7 @@ namespace MenuImplementation;
 
 public class GameplayModeSelectionMenu : Menu
 {
-    public GameplayModeSelectionMenu() : base("Game Mode")
+    public GameplayModeSelectionMenu() : base(MenuTitles.GameplayModeSelectionMenuTitle)
     {
         ConfigureOptionSize(2);
         AddOption("1", "Player vs Player");
@@ -16,10 +16,10 @@ public class GameplayModeSelectionMenu : Menu
         switch (option)
         {
             case "1":
-                GameSetupConfig.IsVsComputer = false;
+                GameState.IsVsComputer = false;
                 return NavigationResult.GoTo(new PlayerSignSelectionMenu());
             case "2":
-                GameSetupConfig.IsVsComputer = true;
+                GameState.IsVsComputer = true;
                 return NavigationResult.GoTo(new PlayerSignSelectionMenu());
         }
         return NavigationResult.None();

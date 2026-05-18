@@ -6,5 +6,7 @@ public enum NavigationResultType
     GoTo,
     Wait,
     Back,
+    Jump,
+    ToRoot,
     Exit
 }

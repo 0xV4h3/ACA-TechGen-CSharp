@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuLib", "MenuLib\MenuLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuImplementation", "MenuImplementation\MenuImplementation.csproj", "{44CD60FC-C1ED-419A-96DD-C420AF652BB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{0095F9C4-1706-420F-961D-A3933B65A871}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{44CD60FC-C1ED-419A-96DD-C420AF652BB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44CD60FC-C1ED-419A-96DD-C420AF652BB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44CD60FC-C1ED-419A-96DD-C420AF652BB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0095F9C4-1706-420F-961D-A3933B65A871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0095F9C4-1706-420F-961D-A3933B65A871}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0095F9C4-1706-420F-961D-A3933B65A871}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0095F9C4-1706-420F-961D-A3933B65A871}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -4,19 +4,31 @@ namespace MenuImplementation;
 
 public class PlayerSignSelectionMenu : Menu
 {
-    public PlayerSignSelectionMenu() : base("Choose X or O")
+    public PlayerSignSelectionMenu() : base(MenuTitles.PlayerSignSelectionMenuTitle)
     {
         ConfigureOptionSize(2);
-        AddOption("X", "Play as X");
-        AddOption("O", "Play as O");
+        AddOption("1", "Play as X");
+        AddOption("2", "Play as O");
     }
 
     protected override NavigationResult HandleOption(string option)
     {
-        if (option.ToUpper() == "X" || option.ToUpper() == "O")
+        switch (option)
         {
-            GameSetupConfig.PlayerSign = option[0];
-            return NavigationResult.GoTo(new PlayMenu());
+            case "1":
+                GameState.PlayerSign = 'X';
+                Game.PlayTicTacToe();
+                Console.WriteLine("Press any key to return to Main Menu...");
+                Console.ReadKey(true);
+                return NavigationResult.ToRoot();
+                // return NavigationResult.Jump(MenuTitles.MainMenuTitle);
+            case "2":
+                GameState.PlayerSign = 'O';
+                Game.PlayTicTacToe();
+                Console.WriteLine("Press any key to return to Main Menu...");
+                Console.ReadKey(true);
+                return NavigationResult.ToRoot();
+                // return NavigationResult.Jump(MenuTitles.MainMenuTitle);
         }
         return NavigationResult.None();
     }

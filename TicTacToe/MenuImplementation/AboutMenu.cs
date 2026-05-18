@@ -4,7 +4,7 @@ namespace MenuImplementation;
 
 public class AboutMenu : Menu
 {
-    public AboutMenu() : base("About") { }
+    public AboutMenu() : base(MenuTitles.AboutMenuTitle) { }
     protected override void InternalDisplay()
     {
         Console.WriteLine("TicTacToe by Vahe Babayan, Tech Gen C#, 2026");

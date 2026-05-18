@@ -3,7 +3,6 @@
 public static class MenuRunner
 {
     private static readonly MenuStack _navigationStack = new MenuStack();
-
     public static void Run(Menu root)
     {
         _navigationStack.Push(root);
@@ -13,7 +12,7 @@ public static class MenuRunner
             var currentMenu = _navigationStack.Peek();
             currentMenu.Display();
 
-            Console.WriteLine("\nSelect option: ");
+            Console.Write("\nSelect option: ");
             var input = Console.ReadLine()?.Trim();
             if (string.IsNullOrWhiteSpace(input)) continue;
 
@@ -27,10 +26,35 @@ public static class MenuRunner
                     break;
                 case NavigationResultType.Wait:
                     Console.WriteLine("Waiting..., Press any key to continue...");
-                    Console.ReadKey();
+                    Console.ReadKey(true);
                     break;
                 case NavigationResultType.Back:
                     if (_navigationStack.Count > 1) _navigationStack.Pop();
+                    break;
+                case NavigationResultType.Jump:
+                    MenuStack tempStack = new MenuStack();
+                    bool menuFound = false;
+                    
+                    while (_navigationStack.Count != 0)
+                    {
+                        if (_navigationStack.Peek().Title == result.Title)
+                        {
+                            menuFound = true;
+                            break;
+                        }
+                        tempStack.Push(_navigationStack.Pop());
+                    }
+                    
+                    if (!menuFound)
+                    {
+                        while (tempStack.Count != 0)
+                        {
+                            _navigationStack.Push(tempStack.Pop());
+                        }
+                    }
+                    break;
+                case NavigationResultType.ToRoot:
+                    while (_navigationStack.Count != 1) _navigationStack.Pop();
                     break;
                 case NavigationResultType.Exit:
                     return;

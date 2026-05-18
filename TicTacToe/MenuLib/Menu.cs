@@ -94,7 +94,7 @@ public abstract class Menu
 
         Console.WriteLine("Invalid option.");
         Console.WriteLine("Press any key to continue...");
-        Console.ReadKey();
+        Console.ReadKey(true);
 
         return NavigationResult.None();
     }

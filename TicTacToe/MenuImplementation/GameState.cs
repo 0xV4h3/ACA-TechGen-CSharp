@@ -1,6 +1,6 @@
 ﻿namespace MenuImplementation;
 
-public static class GameSetupConfig
+public static class GameState
 {
     public static string Username { get; set; } = "Player1";
     public static char PlayerSign { get; set; } = 'X';
