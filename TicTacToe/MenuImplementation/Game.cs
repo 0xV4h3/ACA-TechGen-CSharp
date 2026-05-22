@@ -8,7 +8,8 @@ public static class Game
         
         var game = new TicTacToe(
             GameState.IsVsComputer,
-            GameState.Username,
+            GameState.Player1Name,
+            GameState.Player2Name,
             GameState.PlayerSign,
             GameState.UseWASD
         );

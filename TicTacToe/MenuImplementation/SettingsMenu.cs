@@ -19,7 +19,7 @@ public class SettingsMenu : Menu
             case "1":
                 Console.Write("Enter new username: ");
                 var name = Console.ReadLine();
-                if(!string.IsNullOrWhiteSpace(name)) GameState.Username = name;
+                if(!string.IsNullOrWhiteSpace(name)) GameState.Player1Name = name;
                 return NavigationResult.Wait();
             case "2":
                 GameState.UseWASD = !GameState.UseWASD;

@@ -16,7 +16,7 @@ public abstract class Menu
 {
     public string Title { get; }
 
-    private Option[] _options;
+    protected Option[] _options;
     private int _optionIndex;
 
     public Menu(string title)
@@ -49,7 +49,7 @@ public abstract class Menu
         return false;
     }
 
-    public void Display()
+    public virtual void Display()
     {
         Console.Clear();
         Console.WriteLine($"=== {Title} ===");
@@ -65,6 +65,7 @@ public abstract class Menu
         InternalDisplay();
 
         Console.WriteLine("\n--- Navigation ---");
+        Console.WriteLine("Type 'refresh' to refresh.");
         Console.WriteLine("Type 'back' to go back.");
         Console.WriteLine("Type 'exit' to exit.");
     }
@@ -76,6 +77,11 @@ public abstract class Menu
 
     public NavigationResult ExecuteOption(string option)
     {
+        if (option == "refresh")
+        {
+            return NavigationResult.Refresh();
+        }
+        
         if (option == "back")
         {
             return NavigationResult.Back();

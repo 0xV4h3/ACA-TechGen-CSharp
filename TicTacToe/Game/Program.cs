@@ -16,7 +16,7 @@ class Program
             if (!string.IsNullOrEmpty(name)) break;
             Console.Write("Invalid. Enter your username: ");
         }
-        GameState.Username = name;
+        GameState.Player1Name = name;
         
         var root = new MainMenu();
         MenuRunner.Run(root);

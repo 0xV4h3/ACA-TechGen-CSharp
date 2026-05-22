@@ -14,11 +14,11 @@ public class TicTacToe
     private bool useWASD;
     private int cursorPos;
 
-    public TicTacToe(bool isVsComputer, string username, char playerSign, bool useWASD)
+    public TicTacToe(bool isVsComputer, string playerOne, string playerTwo, char playerSign, bool useWASD)
     {
         this.isVsComputer = isVsComputer;
-        player1Name  = string.IsNullOrEmpty(username) ? "Player1" : username;
-        player2Name  = isVsComputer ? "Computer" : "Player2";
+        player1Name  = string.IsNullOrEmpty(playerOne) ? "Player1" : playerOne;
+        player2Name  = isVsComputer ? "Computer" : string.IsNullOrEmpty(playerOne) ? "Player2" : playerTwo;
         player1Sign  = playerSign;
         player2Sign  = playerSign == 'X' ? 'O' : 'X';
         this.useWASD = useWASD;

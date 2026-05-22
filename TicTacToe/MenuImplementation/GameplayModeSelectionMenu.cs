@@ -17,7 +17,7 @@ public class GameplayModeSelectionMenu : Menu
         {
             case "1":
                 GameState.IsVsComputer = false;
-                return NavigationResult.GoTo(new PlayerSignSelectionMenu());
+                return NavigationResult.GoTo(new PlayerTwoNameSelectionMenu());
             case "2":
                 GameState.IsVsComputer = true;
                 return NavigationResult.GoTo(new PlayerSignSelectionMenu());
