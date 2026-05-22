@@ -29,7 +29,7 @@ public class PlayerTwoNameSelectionMenu : Menu
                 {
                     name = Console.ReadLine()?.Trim();
                     if (!string.IsNullOrEmpty(name)) break;
-                    Console.Write("Invalid. Enter your username: ");
+                    Console.Write("Invalid. Enter opponent's username: ");
                 }
                 GameState.Player2Name = name;
                 return NavigationResult.Refresh();

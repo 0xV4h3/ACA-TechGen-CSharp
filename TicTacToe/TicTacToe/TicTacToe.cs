@@ -28,41 +28,36 @@ public class TicTacToe
     }
     
     public void PlayGame()
-    {
-        Console.CursorVisible = false;
-        try
+    { 
+        int gameStatus;
+        do
         {
-            int gameStatus;
-            do
-            {
-                Console.Clear();
-                DrawTitle();
-                DrawBoard();
-                DrawHelp();
-                DrawTurn();
-
-                if (isVsComputer && currentPlayer == 2)
-                {
-                    System.Threading.Thread.Sleep(500);
-                    int move = GetBestMove();
-                    board[move] = player2Sign;
-                }
-                else
-                {
-                    HandleNavigationAndMove();
-                }
-
-                gameStatus = CheckWinStatus();
-                currentPlayer = currentPlayer == 1 ? 2 : 1;
-            }
-            while (gameStatus == 0);
-
             Console.Clear();
             DrawTitle();
             DrawBoard();
-            PrintResult(gameStatus);
+            DrawHelp();
+            DrawTurn();
+
+            if (isVsComputer && currentPlayer == 2)
+            {
+                System.Threading.Thread.Sleep(500);
+                int move = GetBestMove();
+                board[move] = player2Sign;
+            }
+            else
+            {
+                HandleNavigationAndMove();
+            }
+
+            gameStatus = CheckWinStatus();
+            currentPlayer = currentPlayer == 1 ? 2 : 1;
         }
-        finally { Console.CursorVisible = true; }
+        while (gameStatus == 0);
+
+        Console.Clear();
+        DrawTitle();
+        DrawBoard();
+        PrintResult(gameStatus);
     }
 
     private void DrawTitle()
@@ -83,8 +78,7 @@ public class TicTacToe
                 int idx = row * 3 + col;
                 if (idx == cursorPos && !isVsComputer || (idx == cursorPos && !(isVsComputer && currentPlayer == 2)))
                 {
-                    Console.BackgroundColor = ConsoleColor.DarkGreen;
-                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.Write(board[idx]);
                     Console.ResetColor();
                     Console.ForegroundColor = origColor;
@@ -139,12 +133,13 @@ public class TicTacToe
                 }
                 else
                 {
-                    Console.SetCursorPosition(0, 10);
+                    int safeY = Math.Min( Console.WindowTop + Console.WindowHeight - 2, Console.BufferHeight - 1 );
+                    Console.SetCursorPosition(0, safeY);
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Cell already occupied!");
+                    Console.Write("Cell already occupied!");
                     Console.ResetColor();
                     System.Threading.Thread.Sleep(650);
-                    Console.SetCursorPosition(0, 10);
+                    Console.SetCursorPosition(0, safeY);
                     Console.Write(new string(' ', 40));
                     Console.SetCursorPosition(0, 0);
                 }
