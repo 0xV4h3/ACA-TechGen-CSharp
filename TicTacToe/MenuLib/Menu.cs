@@ -16,7 +16,7 @@ public abstract class Menu
 {
     public string Title { get; }
 
-    protected Option[] _options;
+    private Option[] _options;
     private int _optionIndex;
 
     public Menu(string title)
@@ -49,7 +49,7 @@ public abstract class Menu
         return false;
     }
 
-    public virtual void Display()
+    public void Display()
     {
         Console.Clear();
         Console.WriteLine($"=== {Title} ===");
@@ -72,9 +72,76 @@ public abstract class Menu
 
     protected virtual void InternalDisplay()
     {
-        
+
+    }
+    
+    protected void DrawMenu(int selectedIndex)
+    {
+        Console.Clear();
+        Console.WriteLine($"=== {Title} ===");
+
+        if (_options != null)
+        {
+            for (int i = 0; i < _options.Length; i++)
+            {
+                var option = _options[i];
+                if (i == selectedIndex)
+                {
+                    Console.BackgroundColor = ConsoleColor.Magenta;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"> {option.Value} <");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.WriteLine($"  {option.Value}");
+                }
+            }
+        }
+
+        InternalDisplay();
+
+        Console.WriteLine("\n--- Navigation ---");
+        Console.WriteLine("Enter - select   Backspace - back   R - refresh   X - exit");
     }
 
+    public virtual NavigationResult InteractiveSelect()
+    {
+        int selectedIndex = 0;
+
+        while (true)
+        {
+            DrawMenu(selectedIndex);
+
+            var key = Console.ReadKey(true).Key;
+
+            if (key == ConsoleKey.UpArrow)
+            {
+                selectedIndex = (selectedIndex == 0) ? _options.Length - 1 : selectedIndex - 1;
+            }
+            else if (key == ConsoleKey.DownArrow)
+            {
+                selectedIndex = (selectedIndex + 1) % _options.Length;
+            }
+            else if (key == ConsoleKey.R)
+            {
+                return NavigationResult.Refresh();
+            }
+            else if (key == ConsoleKey.Backspace)
+            {
+                return NavigationResult.Back();
+            }
+            else if (key == ConsoleKey.Enter)
+            {
+                return HandleOption(_options[selectedIndex].Key);
+            }
+            else if (key == ConsoleKey.X)
+            {
+                return NavigationResult.Exit();
+            }
+        }
+    }
+    
     public NavigationResult ExecuteOption(string option)
     {
         if (option == "refresh")

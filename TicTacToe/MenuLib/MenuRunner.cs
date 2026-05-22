@@ -10,13 +10,9 @@ public static class MenuRunner
         while (_navigationStack.Count > 0)
         {
             var currentMenu = _navigationStack.Peek();
-            currentMenu.Display();
-
-            Console.Write("\nSelect option: ");
-            var input = Console.ReadLine()?.Trim();
-            if (string.IsNullOrWhiteSpace(input)) continue;
-
-            var result = currentMenu.ExecuteOption(input);
+            
+            var result = currentMenu.InteractiveSelect();
+            
             switch (result.Type)
             {
                 case NavigationResultType.None:

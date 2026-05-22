@@ -19,6 +19,14 @@ class Program
         GameState.Player1Name = name;
         
         var root = new MainMenu();
-        MenuRunner.Run(root);
+        Console.CursorVisible = false;
+        try
+        {
+            MenuRunner.Run(root);
+        }
+        finally
+        {
+            Console.CursorVisible = true;
+        }
     }
 }

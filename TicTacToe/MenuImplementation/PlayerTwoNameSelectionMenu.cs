@@ -11,28 +11,11 @@ public class PlayerTwoNameSelectionMenu : Menu
         AddOption("2", "Change Opponent");
     }
     
-    public override void Display()
+    protected override void InternalDisplay()
     {
-        Console.Clear();
-        Console.WriteLine($"=== {Title} ===");
         Console.WriteLine($"Current opponent : {GameState.Player2Name}");
-
-        if (_options != null)
-        {
-            foreach (var option in _options)
-            {
-                Console.WriteLine($"{option.Key} - {option.Value}");
-            }
-        }
-
-        InternalDisplay();
-
-        Console.WriteLine("\n--- Navigation ---");
-        Console.WriteLine("Type 'refresh' to refresh.");
-        Console.WriteLine("Type 'back' to go back.");
-        Console.WriteLine("Type 'exit' to exit.");
     }
-
+    
     protected override NavigationResult HandleOption(string option)
     {
         switch (option)
