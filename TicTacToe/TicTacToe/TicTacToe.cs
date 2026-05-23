@@ -18,7 +18,7 @@ public class TicTacToe
     {
         this.isVsComputer = isVsComputer;
         player1Name  = string.IsNullOrEmpty(playerOne) ? "Player1" : playerOne;
-        player2Name  = isVsComputer ? "Computer" : string.IsNullOrEmpty(playerOne) ? "Player2" : playerTwo;
+        player2Name  = isVsComputer ? "Computer" : string.IsNullOrEmpty(playerTwo) ? "Player2" : playerTwo;
         player1Sign  = playerSign;
         player2Sign  = playerSign == 'X' ? 'O' : 'X';
         this.useWASD = useWASD;
