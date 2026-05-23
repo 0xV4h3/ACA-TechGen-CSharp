@@ -115,11 +115,11 @@ public abstract class Menu
 
             var key = Console.ReadKey(true).Key;
 
-            if (key == ConsoleKey.UpArrow)
+            if (key == ConsoleKey.UpArrow || key == ConsoleKey.W)
             {
                 selectedIndex = (selectedIndex == 0) ? _options.Length - 1 : selectedIndex - 1;
             }
-            else if (key == ConsoleKey.DownArrow)
+            else if (key == ConsoleKey.DownArrow || key == ConsoleKey.S)
             {
                 selectedIndex = (selectedIndex + 1) % _options.Length;
             }
@@ -127,11 +127,11 @@ public abstract class Menu
             {
                 return NavigationResult.Refresh();
             }
-            else if (key == ConsoleKey.Backspace)
+            else if (key == ConsoleKey.Backspace  || key == ConsoleKey.LeftArrow  || key == ConsoleKey.A)
             {
                 return NavigationResult.Back();
             }
-            else if (key == ConsoleKey.Enter)
+            else if (key == ConsoleKey.Enter|| key == ConsoleKey.Spacebar  || key == ConsoleKey.RightArrow  || key == ConsoleKey.D)
             {
                 return HandleOption(_options[selectedIndex].Key);
             }
