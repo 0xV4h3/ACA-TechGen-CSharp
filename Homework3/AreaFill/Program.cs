@@ -4,6 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        AreaFill.RecursiveTest();
+        AreaFill.Test("recursive");
+        AreaFill.Test("iterative");
     }
 }
