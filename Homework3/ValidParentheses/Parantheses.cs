@@ -4,7 +4,7 @@ public static class Parantheses
 {
     public static bool IsValid(string s, string method = "stack")
     {
-        if (s.Length == 0 || s.Length % 2 == 1) return false;
+        if (string.IsNullOrWhiteSpace(s) || s.Length % 2 == 1) return false;
         
         switch (method)
         {
