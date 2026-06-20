@@ -1,0 +1,35 @@
+﻿{
+  "Simulation": {
+    "TotalSimulationTicks": -1,
+    "StartItemId": 100,
+    "OrderLineCapacity": 5,
+    "RandomSeed": 42
+  },
+  "Storage": {
+    "StorageCapacityPerType": 50,
+    "StockCapacityPerType": 200
+  },
+  "QualityCheck": {
+    "MinTicksPerItem": 1,
+    "MaxTicksPerItem": 3,
+    "PassPercentage": 80
+  },
+  "Transport": {
+    "ArrivalIntervalTicks": 4,
+    "CapacityPerArrival": 6
+  },
+  "Production": {
+    "MachineA": {
+      "IntervalTicks": 1,
+      "TotalItemsToProduce": 35
+    },
+    "MachineB": {
+      "IntervalTicks": 2,
+      "TotalItemsToProduce": 18
+    },
+    "MachineC": {
+      "IntervalTicks": 3,
+      "TotalItemsToProduce": 12
+    }
+  }
+}
