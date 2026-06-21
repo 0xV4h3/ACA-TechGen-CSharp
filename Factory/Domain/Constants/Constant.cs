@@ -3,25 +3,20 @@
 public abstract class Constant
 {
     public string Value { get; }
-    public string Context { get; }
+    public Context Context { get; }
 
-    protected Constant(string value, string context)
+    protected Constant(string value, Context context)
     {
         if (string.IsNullOrWhiteSpace(value)) 
             throw new ArgumentException("Value cannot be empty.");
         Value = value;
         Context = context;
+        
+        Context.AddConstant(this);
     }
 
     public override string ToString() => Value;
 }
 
-public abstract class StateConstant : Constant 
-{
-    protected StateConstant(string value, string context) : base(value, context) { }
-}
-
-public abstract class TypeConstant : Constant 
-{
-    protected TypeConstant(string value, string context) : base(value, context) { }
-}
+public abstract class TypeConstant(string value, TypeContext context) : Constant(value, context) { }
+public abstract class StateConstant(string value, StateContext context) : Constant(value, context) { }

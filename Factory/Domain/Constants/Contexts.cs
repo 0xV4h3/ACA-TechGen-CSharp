@@ -1,21 +1,22 @@
 ﻿namespace Domain.Constants;
 
-public static class Contexts
+public abstract class Context(string name)
 {
-    public static class Types
-    {
-        public const string Item = "ItemType";
-        public const string Machine = "MachineType";
-    }
+    public string Name { get; } = name;
+    private readonly List<Constant> _constants = [];
     
-    public static class States
+    internal void AddConstant(Constant constant)
     {
-        public const string Item = "ItemState";
-        public const string Machine = "MachineState";
-        public const string Capacity = "CapacityState";
-        public const string OrderLine = "OrderLineState";
-        public const string Stock = "StockState";
-        public const string Storage = "StorageState";
-        public const string Transport = "TransportState";
+        if (!_constants.Any(c => c.Value.Equals(constant.Value, StringComparison.OrdinalIgnoreCase)))
+        {
+            _constants.Add(constant);
+        }
     }
+
+    public IEnumerable<Constant> GetAll() => _constants;
+    public IEnumerable<string> GetAllString() => _constants.Select(c => c.Value);
+    public bool IsValid(string value) => _constants.Any(c => c.Value.Equals(value, StringComparison.OrdinalIgnoreCase));
 }
+
+public class TypeContext(string name) : Context(name) { }
+public class StateContext(string name) : Context(name) { }
