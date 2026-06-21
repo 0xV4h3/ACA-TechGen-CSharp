@@ -1,15 +1,13 @@
 ﻿namespace Domain.Constants;
 
-public class OrderLineStates : StateConstant
+public class OrderLineState(string value) : StateConstant(value, Contexts.States.OrderLine) { }
+
+public static class OrderLineStates
 {
-    private OrderLineStates(string value) : base(value, Contexts.States.OrderLine) { }
+    public static OrderLineState Create(string value) => new(value);
 
-    public static OrderLineStates Create(string value) => new(value);
-
-    public static readonly OrderLineStates Active = new("Active");
-    public static readonly OrderLineStates Paused = new("Paused");
-    public static readonly OrderLineStates Blocked = new("Blocked");
-    public static readonly OrderLineStates Disabled = new("Disabled");
-
-    public static IEnumerable<OrderLineStates> All => [Active, Paused, Blocked, Disabled];
+    public static readonly OrderLineState Active = new("Active");
+    public static readonly OrderLineState Paused = new("Paused");
+    public static readonly OrderLineState Blocked = new("Blocked");
+    public static readonly OrderLineState Disabled = new("Disabled");
 }
