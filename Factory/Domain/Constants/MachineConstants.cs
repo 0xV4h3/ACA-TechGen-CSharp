@@ -1,28 +1,24 @@
 ﻿namespace Domain.Constants;
 
-public class MachineTypes : TypeConstant
+public class MachineType(string value) : TypeConstant(value, Contexts.Types.Machine) { }
+
+public static class MachineTypes
 {
-    private MachineTypes(string value) : base(value, Contexts.Types.Machine) { }
+    public static MachineType Create(string value) => new(value);
 
-    public static MachineTypes Create(string value) => new(value);
-
-    public static readonly MachineTypes MachineA = new("MachineA");
-    public static readonly MachineTypes MachineB = new("MachineB");
-    public static readonly MachineTypes MachineC = new("MachineC");
-    public static readonly MachineTypes Unknown = new("Unknown");
-
-    public static IEnumerable<MachineTypes> All => [MachineA, MachineB, MachineC, Unknown];
+    public static readonly MachineType MachineA = new("MachineA");
+    public static readonly MachineType MachineB = new("MachineB");
+    public static readonly MachineType MachineC = new("MachineC");
+    public static readonly MachineType Unknown = new("Unknown");
 }
 
-public class MachineStates : StateConstant
+public class MachineState(string value) : StateConstant(value, Contexts.States.Machine) { }
+
+public static class MachineStates
 {
-    private MachineStates(string value) : base(value, Contexts.States.Machine) { }
+    public static MachineState Create(string value) => new(value);
 
-    public static MachineStates Create(string value) => new(value);
-
-    public static readonly MachineStates Idle = new("Idle");
-    public static readonly MachineStates Producing = new("Producing");
-    public static readonly MachineStates Maintenance = new("Maintenance");
-
-    public static IEnumerable<MachineStates> All => [Idle, Producing, Maintenance];
+    public static readonly MachineState Idle = new("Idle");
+    public static readonly MachineState Producing = new("Producing");
+    public static readonly MachineState Maintenance = new("Maintenance");
 }
