@@ -1,15 +1,13 @@
 ﻿namespace Domain.Constants;
 
-public class StorageStates : StateConstant
+public class StorageState(string value) : StateConstant(value, Contexts.States.Storage) { }
+
+public static class StorageStates
 {
-    private StorageStates(string value) : base(value, Contexts.States.Storage) { }
+    public static StorageState Create(string value) => new(value);
 
-    public static StorageStates Create(string value) => new(value);
-
-    public static readonly StorageStates Open = new("Open");
-    public static readonly StorageStates LockedForInbound = new("LockedForInbound");
-    public static readonly StorageStates LockedForOutbound = new("LockedForOutbound");
-    public static readonly StorageStates Closed = new("Closed");
-
-    public static IEnumerable<StorageStates> All => [Open, LockedForInbound, LockedForOutbound, Closed];
+    public static readonly StorageState Open = new("Open");
+    public static readonly StorageState LockedForInbound = new("LockedForInbound");
+    public static readonly StorageState LockedForOutbound = new("LockedForOutbound");
+    public static readonly StorageState Closed = new("Closed");
 }
