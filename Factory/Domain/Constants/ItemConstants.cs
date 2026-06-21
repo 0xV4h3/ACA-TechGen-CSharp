@@ -1,38 +1,30 @@
 ﻿namespace Domain.Constants;
 
-public class ItemTypes : TypeConstant
+public class ItemType(string value) : TypeConstant(value, Contexts.Types.Item) { }
+
+public static class ItemTypes
 {
-    private ItemTypes(string value) : base(value, Contexts.Types.Item) { }
-
-    public static ItemTypes Create(string value) => new(value);
-
-    public static readonly ItemTypes A = new("A");
-    public static readonly ItemTypes B = new("B");
-    public static readonly ItemTypes C = new("C");
-    public static readonly ItemTypes Unknown = new("Unknown");
-
-    public static IEnumerable<ItemTypes> All => [A, B, C, Unknown];
+    public static ItemType Create(string value) => new(value);
+    
+    public static readonly ItemType A = new("A");
+    public static readonly ItemType B = new("B");
+    public static readonly ItemType C = new("C");
+    public static readonly ItemType Unknown = new("Unknown");
 }
 
-public class ItemStates : StateConstant
+public class ItemState(string value) : StateConstant(value, Contexts.States.Item) { }
+
+public static class ItemStates
 {
-    private ItemStates(string value) : base(value, Contexts.States.Item) { }
-
-    public static ItemStates Create(string value) => new(value);
-
-    public static readonly ItemStates Ordered = new("Ordered");
-    public static readonly ItemStates Manufacturing = new("Manufacturing");
-    public static readonly ItemStates Staged = new("Staged");
-    public static readonly ItemStates Testing = new("Testing");
-    public static readonly ItemStates Passed = new("Passed");
-    public static readonly ItemStates Failed = new("Failed");
-    public static readonly ItemStates Stored = new("Stored");
-    public static readonly ItemStates Shipping = new("Shipping");
-    public static readonly ItemStates Delivered = new("Delivered");
-
-    public static IEnumerable<ItemStates> All => 
-    [
-        Ordered, Manufacturing, Staged, Testing, 
-        Passed, Failed, Stored, Shipping, Delivered
-    ];
+    public static ItemState Create(string value) => new(value);
+    
+    public static readonly ItemState Ordered = new("Ordered");
+    public static readonly ItemState Manufacturing = new("Manufacturing");
+    public static readonly ItemState Staged = new("Staged");
+    public static readonly ItemState Testing = new("Testing");
+    public static readonly ItemState Passed = new("Passed");
+    public static readonly ItemState Failed = new("Failed");
+    public static readonly ItemState Stored = new("Stored");
+    public static readonly ItemState Shipping = new("Shipping");
+    public static readonly ItemState Delivered = new("Delivered");
 }
