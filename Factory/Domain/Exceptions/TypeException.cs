@@ -1,10 +1,12 @@
-﻿namespace Domain.Exceptions;
+﻿using Domain.Constants;
+
+namespace Domain.Exceptions;
 
 public class TypeException : DomainException
 {
-    public string Type { get; init; }
+    public TypeConstant Type { get; init; }
 
-    public TypeException(string message, string type) : base(message)
+    public TypeException(string message, TypeConstant type) : base(message)
     {
         Type = type;
     }

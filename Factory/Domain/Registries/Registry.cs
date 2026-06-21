@@ -1,34 +1,75 @@
-﻿namespace Domain.Registries;
+﻿using Domain.Constants;
+using Domain.Exceptions;
+
+namespace Domain.Registries;
 
 public class Registry : IRegistry
 {
-    private readonly Dictionary<string, HashSet<string>> _storage = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, Context> _contexts = new(StringComparer.OrdinalIgnoreCase);
 
-    public void Register(string value, string context)
+    public Registry()
     {
-        if (string.IsNullOrWhiteSpace(value) || string.IsNullOrWhiteSpace(context))
-            throw new ArgumentException("Value and Context cannot be empty.");
+        AutoDiscoverContexts();
+    }
 
-        if (!_storage.TryGetValue(context, out var set))
+    private void AutoDiscoverContexts()
+    {
+        foreach (var typeContext in Contexts.Types.All)
         {
-            set = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            _storage[context] = set;
+            RegisterContext(typeContext);
         }
-
-        set.Add(value);
+        foreach (var stateContext in Contexts.States.All)
+        {
+            RegisterContext(stateContext);
+        }
     }
 
-    public bool IsValid(string value, string context)
+    public bool RegisterContext(Context context)
     {
-        if (value == null || context == null) return false;
-
-        return _storage.TryGetValue(context, out var set) && set.Contains(value);
+        if (context == null) throw new ArgumentNullException(nameof(context));
+        
+        return _contexts.TryAdd(context.Name, context);
     }
 
-    public IEnumerable<string> GetAll(string context)
+    public bool Register(Constant constant, bool autoRegisterContext = false)
     {
-        if (context == null) return Enumerable.Empty<string>();
+        if (constant == null) throw new ArgumentNullException(nameof(constant));
 
-        return _storage.TryGetValue(context, out var set) ? set.ToList() : Enumerable.Empty<string>();
+        var contextName = constant.Context.Name;
+
+        if (!_contexts.TryGetValue(contextName, out var registeredContext))
+        {
+            if (autoRegisterContext)
+            {
+                registeredContext = constant.Context;
+                RegisterContext(registeredContext);
+            }
+            else
+            {
+                throw new ContextException(
+                    $"Context '{constant.Context.Name}' is not registered. Set autoRegisterContext to true to register it automatically.", constant.Context);
+            }
+        }
+        
+        if (registeredContext.IsValid(constant.Value))
+            return false;
+
+        registeredContext.AddConstant(constant);
+        return true;
+    }
+
+    public bool IsValid(string value, Context context)
+    {
+        return _contexts.TryGetValue(context.Name, out var registeredContext) && registeredContext.IsValid(value);
+    }
+
+    public IEnumerable<Constant> GetAll(Context context)
+    {
+        return _contexts.TryGetValue(context.Name, out var registeredContext) ? registeredContext.GetAll() : [];
+    }
+
+    public IEnumerable<string> GetAllString(Context context)
+    {
+        return _contexts.TryGetValue(context.Name, out var registeredContext) ? registeredContext.GetAllString() : [];
     }
 }

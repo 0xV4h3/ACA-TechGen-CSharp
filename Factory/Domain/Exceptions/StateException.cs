@@ -1,10 +1,12 @@
-﻿namespace Domain.Exceptions;
+﻿using Domain.Constants;
+
+namespace Domain.Exceptions;
 
 public class StateException : DomainException
 {
-    public string State { get; init; }
+    public StateConstant State { get; init; }
 
-    public StateException(string message, string state) : base(message)
+    public StateException(string message, StateConstant state) : base(message)
     {
         State = state;
     }

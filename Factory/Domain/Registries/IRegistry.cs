@@ -1,9 +1,12 @@
-﻿namespace Domain.Registries;
+﻿using Domain.Constants;
+
+namespace Domain.Registries;
 
 public interface IRegistry
 {
-    void Register(string value, string context);
-    bool IsValid(string value, string context);
-    IEnumerable<string> GetAll(string context);
+    bool Register(Constant constant, bool autoRegisterContext = false);
+    bool RegisterContext(Context context);
+    bool IsValid(string value, Context context);
+    IEnumerable<Constant> GetAll(Context context);
+    IEnumerable<string> GetAllString(Context context);
 }
-

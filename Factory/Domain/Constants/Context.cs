@@ -3,19 +3,23 @@
 public abstract class Context(string name)
 {
     public string Name { get; } = name;
-    private readonly List<Constant> _constants = [];
     
+    private readonly Dictionary<string, Constant> _constants = new(StringComparer.OrdinalIgnoreCase);
+
     internal void AddConstant(Constant constant)
     {
-        if (!_constants.Any(c => c.Value.Equals(constant.Value, StringComparison.OrdinalIgnoreCase)))
-        {
-            _constants.Add(constant);
-        }
+        _constants[constant.Value] = constant;
     }
 
-    public IEnumerable<Constant> GetAll() => _constants;
-    public IEnumerable<string> GetAllString() => _constants.Select(c => c.Value);
-    public bool IsValid(string value) => _constants.Any(c => c.Value.Equals(value, StringComparison.OrdinalIgnoreCase));
+    public IEnumerable<Constant> GetAll() => _constants.Values;
+    
+    public IEnumerable<string> GetAllString() => _constants.Keys;
+    
+    public bool IsValid(string value)
+    {
+        if (value == null) return false;
+        return _constants.ContainsKey(value);
+    }
 }
 
 public class TypeContext(string name) : Context(name) { }
