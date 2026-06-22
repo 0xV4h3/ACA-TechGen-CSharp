@@ -25,7 +25,7 @@ public abstract class FlexibleProductionFactory : IProductionFactory
         return CreateMachineInstance(FactoryMachineType, MachineStates.Idle, SupportedItemTypes, ProductionRegistry);
     }
     
-    protected abstract Machine CreateMachineInstance(
+    protected abstract MultiTypeMachine CreateMachineInstance(
         MachineType type, MachineState state, IEnumerable<ItemType> supportedItems, IRegistry reg);
     
     protected void ValidateTypeSupport(ItemType type)
