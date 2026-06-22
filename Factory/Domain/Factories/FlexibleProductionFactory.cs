@@ -4,16 +4,16 @@ using Domain.Registries;
 
 namespace Domain.Factories;
 
-public abstract class FlexibleProductionFactory
+public abstract class FlexibleProductionFactory : IProductionFactory
 {
     protected readonly List<ItemType> SupportedItemTypes;
     protected readonly MachineType FactoryMachineType;
-    protected readonly IRegistry Registry;
+    protected readonly IRegistry ProductionRegistry;
     
     protected FlexibleProductionFactory(MachineType machineType, List<ItemType> supportedItemTypes, IRegistry registry)
     {
         FactoryMachineType = machineType;
-        Registry = registry ?? throw new ArgumentNullException(nameof(registry));
+        ProductionRegistry = registry ?? throw new ArgumentNullException(nameof(registry));
         SupportedItemTypes = supportedItemTypes ?? throw new ArgumentNullException(nameof(supportedItemTypes));
         
         if (SupportedItemTypes.Count == 0)
@@ -22,10 +22,8 @@ public abstract class FlexibleProductionFactory
 
     public Machine CreateMachine()
     {
-        return CreateMachineInstance(FactoryMachineType, MachineStates.Idle, SupportedItemTypes, Registry);
+        return CreateMachineInstance(FactoryMachineType, MachineStates.Idle, SupportedItemTypes, ProductionRegistry);
     }
-    
-    public abstract Item CreateItem(int id);
     
     protected abstract Machine CreateMachineInstance(
         MachineType type, MachineState state, IEnumerable<ItemType> supportedItems, IRegistry reg);

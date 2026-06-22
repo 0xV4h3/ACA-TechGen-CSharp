@@ -6,6 +6,5 @@ namespace Domain.Factories;
 
 public interface IProductionFactory
 {
-    Item CreateItem(int id);
     Machine CreateMachine();
 }
