@@ -3,11 +3,7 @@ using Domain.Registries;
 
 namespace Domain.Models;
 
-public abstract class Item : Entity
+public abstract class Item(int id, ItemType type, ItemState state) : Entity(type, state)
 {
-    public int Id { get; init; }
-    protected Item(int id, ItemType type, ItemState state, IRegistry registry) : base(type, state, registry)
-    {
-        Id = id;
-    }
+    public int Id { get; init; } = id;
 }
