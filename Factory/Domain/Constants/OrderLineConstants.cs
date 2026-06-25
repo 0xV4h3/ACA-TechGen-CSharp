@@ -1,6 +1,9 @@
 ﻿namespace Domain.Constants;
 
-public class OrderLineState(string value) : StateConstant(value, Contexts.States.OrderLine) { }
+public class OrderLineState : StateConstant
+{
+    internal OrderLineState(string value) : base(value, Contexts.States.OrderLine) { }
+}
 
 public static class OrderLineStates
 {

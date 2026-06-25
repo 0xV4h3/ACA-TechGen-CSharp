@@ -1,6 +1,9 @@
 ﻿namespace Domain.Constants;
 
-public class TransportState(string value) : StateConstant(value, Contexts.States.Transport) { }
+public class TransportState : StateConstant
+{
+    internal TransportState(string value) : base(value, Contexts.States.Transport) { }
+}
 
 public static class TransportStates
 {

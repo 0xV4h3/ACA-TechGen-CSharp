@@ -1,6 +1,9 @@
 ﻿namespace Domain.Constants;
 
-public class CapacityState(string value) : StateConstant(value, Contexts.States.Capacity) { }
+public class CapacityState : StateConstant
+{
+    internal CapacityState(string value) : base(value, Contexts.States.Capacity) { }
+}
 
 public static class CapacityStates
 {

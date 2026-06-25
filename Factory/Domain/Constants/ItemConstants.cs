@@ -1,6 +1,9 @@
 ﻿namespace Domain.Constants;
 
-public class ItemType(string value) : TypeConstant(value, Contexts.Types.Item) { }
+public class ItemType : TypeConstant
+{
+    internal ItemType(string value) : base(value, Contexts.Types.Item) { }
+}
 
 public static class ItemTypes
 {
@@ -12,7 +15,10 @@ public static class ItemTypes
     public static readonly ItemType Unknown = new("Unknown");
 }
 
-public class ItemState(string value) : StateConstant(value, Contexts.States.Item) { }
+public class ItemState : StateConstant
+{
+    internal ItemState(string value) : base(value, Contexts.States.Item) { }
+}
 
 public static class ItemStates
 {

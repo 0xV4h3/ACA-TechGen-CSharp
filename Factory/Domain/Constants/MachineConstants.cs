@@ -1,6 +1,9 @@
 ﻿namespace Domain.Constants;
 
-public class MachineType(string value) : TypeConstant(value, Contexts.Types.Machine) { }
+public class MachineType : TypeConstant
+{
+    internal MachineType(string value) : base(value, Contexts.Types.Machine) { }
+}
 
 public static class MachineTypes
 {
@@ -12,7 +15,10 @@ public static class MachineTypes
     public static readonly MachineType Unknown = new("Unknown");
 }
 
-public class MachineState(string value) : StateConstant(value, Contexts.States.Machine) { }
+public class MachineState : StateConstant
+{
+    internal MachineState(string value) : base(value, Contexts.States.Machine) { }
+}
 
 public static class MachineStates
 {

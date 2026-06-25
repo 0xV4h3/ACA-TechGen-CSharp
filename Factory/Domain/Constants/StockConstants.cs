@@ -1,6 +1,9 @@
 ﻿namespace Domain.Constants;
 
-public class StockState(string value) : StateConstant(value, Contexts.States.Stock) { }
+public class StockState : StateConstant
+{
+    internal StockState(string value) : base(value, Contexts.States.Stock) { }
+}
 
 public static class StockStates
 {

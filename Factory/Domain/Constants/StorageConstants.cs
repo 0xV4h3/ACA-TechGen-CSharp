@@ -1,6 +1,9 @@
 ﻿namespace Domain.Constants;
 
-public class StorageState(string value) : StateConstant(value, Contexts.States.Storage) { }
+public class StorageState : StateConstant
+{
+    internal StorageState(string value) : base(value, Contexts.States.Storage) { }
+}
 
 public static class StorageStates
 {
