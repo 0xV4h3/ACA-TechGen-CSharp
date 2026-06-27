@@ -1,6 +1,6 @@
 ﻿namespace Domain.Configuration;
 
-public class QualityCheckSettings
+public class QualityCheckerSettings
 {
     private int _minTicksPerItem;
     private int _maxTicksPerItem;

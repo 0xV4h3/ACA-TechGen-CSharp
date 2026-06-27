@@ -9,7 +9,7 @@
     "StorageCapacityPerType": 50,
     "StockCapacityPerType": 200
   },
-  "QualityCheck": {
+  "QualityChecker": {
     "MinTicksPerItem": 1,
     "MaxTicksPerItem": 3,
     "PassPercentage": 80
