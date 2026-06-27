@@ -1,5 +1,20 @@
 ﻿namespace Domain.Constants;
 
+public class TransportType : TypeConstant
+{
+    internal TransportType(string value) : base(value, Contexts.Types.Transport) { }
+}
+
+public static class TransportTypes
+{
+    public static TransportType Create(string value) => new(value);
+    
+    public static readonly TransportType TransportA = new("TransportA");
+    public static readonly TransportType TransportB = new("TransportB");
+    public static readonly TransportType TransportC = new("TransportC");
+    public static readonly TransportType Unknown = new("Unknown");
+}
+
 public class TransportState : StateConstant
 {
     internal TransportState(string value) : base(value, Contexts.States.Transport) { }
