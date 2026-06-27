@@ -11,10 +11,7 @@ public abstract class Context(string name)
         _constants[constant.Value] = constant;
     }
 
-    public Constant? Get(string constantValue)
-    {
-        return _constants.GetValueOrDefault(constantValue);
-    }
+    public Constant? Get(string constantValue) => _constants.GetValueOrDefault(constantValue);
 
     public IEnumerable<Constant> GetAll() => _constants.Values;
     
