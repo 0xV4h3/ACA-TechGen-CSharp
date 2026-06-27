@@ -1,5 +1,20 @@
 ﻿namespace Domain.Constants;
 
+public class StockType : TypeConstant
+{
+    internal StockType(string value) : base(value, Contexts.Types.Stock) { }
+}
+
+public static class StockTypes
+{
+    public static StockType Create(string value) => new(value);
+    
+    public static readonly StockType StockA = new("StockA");
+    public static readonly StockType StockB = new("StockB");
+    public static readonly StockType StockC = new("StockC");
+    public static readonly StockType Unknown = new("Unknown");
+}
+
 public class StockState : StateConstant
 {
     internal StockState(string value) : base(value, Contexts.States.Stock) { }
