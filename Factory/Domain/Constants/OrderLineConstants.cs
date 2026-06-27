@@ -1,5 +1,20 @@
 ﻿namespace Domain.Constants;
 
+public class OrderLineType : TypeConstant
+{
+    internal OrderLineType(string value) : base(value, Contexts.Types.OrderLine) { }
+}
+
+public static class OrderLineTypes
+{
+    public static OrderLineType Create(string value) => new(value);
+
+    public static readonly OrderLineType OrderLineA = new("OrderLineA");
+    public static readonly OrderLineType OrderLineB = new("OrderLineB");
+    public static readonly OrderLineType OrderLineC = new("OrderLineC");
+    public static readonly OrderLineType Unknown = new("Unknown");
+}
+
 public class OrderLineState : StateConstant
 {
     internal OrderLineState(string value) : base(value, Contexts.States.OrderLine) { }
