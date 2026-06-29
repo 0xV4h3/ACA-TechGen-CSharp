@@ -11,36 +11,32 @@ public static class RetryExecutor
         if (maxAttempts <= 0) throw new ArgumentOutOfRangeException(nameof(maxAttempts));
 
         int attempts = 0;
+        Exception? lastException = null;
         
         while (attempts < maxAttempts)
         {
             attempts++;
-
             try
             {
-                var value = operation();
                 return new Result<T>
                 {
                     Success = true,
-                    Value = value,
+                    Value = operation(),
                     Attempts = attempts
                 };
             }
             catch (Exception ex)
             {
-                bool canRetry = attempts < maxAttempts && (shouldRetry?.Invoke(ex) ?? true);
-
-                if (!canRetry)
-                {
-                    return new Result<T>
-                    {
-                        Success = false,
-                        Error = ex,
-                        Attempts = attempts
-                    };
-                }
+                lastException = ex;
+                if (shouldRetry != null && !shouldRetry(ex))
+                    break;
             }
         }
-        throw new InvalidOperationException("Unexpected exit from retry loop.");
+        return new Result<T>
+        {
+            Success = false,
+            Error = lastException,
+            Attempts = attempts
+        };
     }
 }
