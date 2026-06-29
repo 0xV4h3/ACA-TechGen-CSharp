@@ -2,7 +2,7 @@
 
 public static class CollectionOps
 {
-    public static List<T> Filter<T>(IEnumerable<T> source, Predicate<T> predicate)
+    public static ICollection<T> Filter<T>(ICollection<T> source, Predicate<T> predicate)
     {
         var result = new List<T>();
         foreach (var item in source)
@@ -14,7 +14,7 @@ public static class CollectionOps
         return result;
     }
 
-    public static List<TOut> Project<TIn, TOut>(IEnumerable<TIn> source, Func<TIn, TOut> transform)
+    public static ICollection<TOut> Project<TIn, TOut>(ICollection<TIn> source, Func<TIn, TOut> transform)
     {
         var result = new List<TOut>();
         foreach (var item in source)
