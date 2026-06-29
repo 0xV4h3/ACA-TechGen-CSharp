@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pair", "Pair\Pair.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollectionOps", "CollectionOps\CollectionOps.csproj", "{6065A495-2D1E-4CE2-A9BF-1246304915A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IInitializable", "IInitializable\IInitializable.csproj", "{378376E6-3951-4003-A530-73280F5FDDBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{6065A495-2D1E-4CE2-A9BF-1246304915A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6065A495-2D1E-4CE2-A9BF-1246304915A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6065A495-2D1E-4CE2-A9BF-1246304915A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{378376E6-3951-4003-A530-73280F5FDDBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{378376E6-3951-4003-A530-73280F5FDDBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{378376E6-3951-4003-A530-73280F5FDDBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{378376E6-3951-4003-A530-73280F5FDDBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
