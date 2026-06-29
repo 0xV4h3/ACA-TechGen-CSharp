@@ -11,8 +11,8 @@ public static class RetryExecutor
         if (maxAttempts <= 0) throw new ArgumentOutOfRangeException(nameof(maxAttempts));
 
         int attempts = 0;
-
-        while (true)
+        
+        while (attempts < maxAttempts)
         {
             attempts++;
 
@@ -41,5 +41,6 @@ public static class RetryExecutor
                 }
             }
         }
+        throw new InvalidOperationException("Unexpected exit from retry loop.");
     }
 }
