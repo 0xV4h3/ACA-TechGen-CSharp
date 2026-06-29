@@ -30,9 +30,9 @@ public class TopNBuffer<T>(int capacity, IComparer<T> comparer)
             _count++;
     }
 
-    public T[] Snapshot()
+    public IEnumerable<T> Snapshot()
     {
-        T[] result = new T[_count];
+        var result = new T[_count];
         for (int i = 0; i < _count; i++)
         {
             result[i] = _items[i];
