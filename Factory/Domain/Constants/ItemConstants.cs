@@ -34,3 +34,19 @@ public static class ItemStates
     public static readonly ItemState Shipping = new("Shipping");
     public static readonly ItemState Delivered = new("Delivered");
 }
+
+public class ItemQuality : QualityConstant
+{
+    internal ItemQuality(string value) : base(value, Contexts.Qualities.Item) { }
+}
+
+public static class ItemQualities
+{
+    public static ItemQuality Create(string value) => new(value);
+    
+    public static readonly ItemQuality Excellent = new("Excellent");
+    public static readonly ItemQuality Good = new("Good");
+    public static readonly ItemQuality Average = new("Average");
+    public static readonly ItemQuality Fair = new("Fair");
+    public static readonly ItemQuality Poor = new("Poor");
+}

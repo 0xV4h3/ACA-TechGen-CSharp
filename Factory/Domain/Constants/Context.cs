@@ -26,3 +26,4 @@ public abstract class Context(string name)
 
 public class TypeContext(string name) : Context(name) { }
 public class StateContext(string name) : Context(name) { }
+public class QualityContext(string name) : Context(name) { }

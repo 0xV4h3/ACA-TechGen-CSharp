@@ -20,3 +20,4 @@ public abstract class Constant
 
 public abstract class TypeConstant(string value, TypeContext context) : Constant(value, context) { }
 public abstract class StateConstant(string value, StateContext context) : Constant(value, context) { }
+public abstract class QualityConstant(string value, QualityContext context) : Constant(value, context) { }

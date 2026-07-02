@@ -36,4 +36,14 @@ public static class Contexts
             Stock, Transport, Storage, Capacity
         ];
     }
+
+    public static class Qualities
+    {
+        public static readonly QualityContext Item = new("ItemQuality");
+        
+        public static IEnumerable<QualityContext> All => 
+        [
+            Item
+        ];
+    }
 }
