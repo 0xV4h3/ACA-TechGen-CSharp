@@ -1,7 +1,7 @@
 ﻿using Domain.Constants;
 using Domain.Exceptions;
 
-namespace Domain.Models;
+namespace Domain.Models.Abstractions;
 
 public abstract class Entity
 {

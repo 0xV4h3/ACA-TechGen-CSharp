@@ -2,6 +2,7 @@
 using Domain.Registries;
 using Domain.Exceptions;
 using Domain.Models.Quality;
+using Domain.Models.Abstractions;
 
 namespace Domain.Models;
 

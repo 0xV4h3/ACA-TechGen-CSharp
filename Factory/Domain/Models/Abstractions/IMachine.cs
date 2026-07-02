@@ -1,6 +1,6 @@
 ﻿using Domain.Constants;
 
-namespace Domain.Models;
+namespace Domain.Models.Abstractions;
 
 public interface IMachine { }
 
