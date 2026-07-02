@@ -4,6 +4,6 @@ using Domain.Registries;
 
 namespace FactoryCore;
 
-public class ItemA(int id) : Item(id, ItemTypes.A, ItemStates.Ordered) { }
-public class ItemB(int id) : Item(id, ItemTypes.B, ItemStates.Ordered) { }
-public class ItemC(int id) : Item(id, ItemTypes.C, ItemStates.Ordered) { }
+public class ItemA(int id) : Item(id, ItemTypes.A, ItemStates.Ordered, QualityConverters.ForItems.Default) { }
+public class ItemB(int id) : Item(id, ItemTypes.B, ItemStates.Ordered, QualityConverters.ForItems.Default) { }
+public class ItemC(int id) : Item(id, ItemTypes.C, ItemStates.Ordered, QualityConverters.ForItems.Default) { }
