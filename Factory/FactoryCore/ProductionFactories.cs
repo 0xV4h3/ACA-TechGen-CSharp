@@ -18,3 +18,8 @@ public class FactoryC(IRegistry registry) : IProductionFactory
 {
     public Machine CreateMachine() => new MachineC(registry);
 }
+
+public class FactoryAB(IRegistry registry) : IProductionFactory
+{
+    public Machine CreateMachine() => new MachineAB(registry);
+}
