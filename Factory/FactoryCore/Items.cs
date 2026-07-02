@@ -1,6 +1,6 @@
 ﻿using Domain.Constants;
 using Domain.Models;
-using Domain.Registries;
+using Domain.Models.Quality;
 
 namespace FactoryCore;
 

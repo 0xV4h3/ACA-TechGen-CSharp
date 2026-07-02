@@ -1,7 +1,7 @@
 ﻿using Domain.Constants;
 using Domain.Registries;
 
-namespace Domain.Models;
+namespace Domain.Models.Quality;
 
 public static class QualityConverters
 {

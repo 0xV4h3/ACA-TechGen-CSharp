@@ -1,6 +1,6 @@
 ﻿using Domain.Constants;
 
-namespace Domain.Models;
+namespace Domain.Models.Quality;
 
 public interface IQualityConverter<out TQuality> where TQuality : QualityConstant
 {

@@ -1,4 +1,5 @@
 ﻿using Domain.Constants;
+using Domain.Models.Quality;
 
 namespace Domain.Models;
 
