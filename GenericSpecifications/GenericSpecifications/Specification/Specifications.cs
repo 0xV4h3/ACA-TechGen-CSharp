@@ -1,6 +1,6 @@
 ﻿namespace GenericSpecifications.Specification;
 
-public static class Specification
+public static class Specifications
 {
     public static ISpecification<T> Create<T>(Predicate<T> predicate)
     {
