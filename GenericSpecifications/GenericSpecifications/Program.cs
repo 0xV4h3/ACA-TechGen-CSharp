@@ -1,9 +1,11 @@
-﻿namespace GenericSpecifications;
+﻿using GenericSpecifications.Demo;
+    
+namespace GenericSpecifications;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        SpecificationDemo.Run();
     }
 }
