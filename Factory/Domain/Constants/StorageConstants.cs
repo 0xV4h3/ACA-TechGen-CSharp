@@ -2,7 +2,7 @@
 
 public class StorageType : TypeConstant
 {
-    internal StorageType(string value) : base(value, Contexts.Types.Storage) { }
+    internal StorageType(string value) : base(value, Contexts.Storage) { }
 }
 
 public static class StorageTypes
@@ -17,7 +17,7 @@ public static class StorageTypes
 
 public class StorageState : StateConstant
 {
-    internal StorageState(string value) : base(value, Contexts.States.Storage) { }
+    internal StorageState(string value) : base(value, Contexts.Storage) { }
 }
 
 public static class StorageStates

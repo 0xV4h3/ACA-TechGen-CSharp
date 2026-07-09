@@ -2,7 +2,7 @@
 
 public class QualityCheckerType : TypeConstant
 {
-    internal QualityCheckerType(string value) : base(value, Contexts.Types.QualityChecker) { }
+    internal QualityCheckerType(string value) : base(value, Contexts.QualityChecker) { }
 }
 
 public static class QualityCheckerTypes
@@ -17,7 +17,7 @@ public static class QualityCheckerTypes
 
 public class QualityCheckerState : StateConstant
 {
-    internal QualityCheckerState(string value) : base(value, Contexts.States.QualityChecker) { }
+    internal QualityCheckerState(string value) : base(value, Contexts.QualityChecker) { }
 }
 
 public static class QualityCheckerStates

@@ -2,7 +2,7 @@
 
 public class MachineType : TypeConstant
 {
-    internal MachineType(string value) : base(value, Contexts.Types.Machine) { }
+    internal MachineType(string value) : base(value, Contexts.Machine) { }
 }
 
 public static class MachineTypes
@@ -17,7 +17,7 @@ public static class MachineTypes
 
 public class MachineState : StateConstant
 {
-    internal MachineState(string value) : base(value, Contexts.States.Machine) { }
+    internal MachineState(string value) : base(value, Contexts.Machine) { }
 }
 
 public static class MachineStates

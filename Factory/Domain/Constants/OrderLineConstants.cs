@@ -2,7 +2,7 @@
 
 public class OrderLineType : TypeConstant
 {
-    internal OrderLineType(string value) : base(value, Contexts.Types.OrderLine) { }
+    internal OrderLineType(string value) : base(value, Contexts.OrderLine) { }
 }
 
 public static class OrderLineTypes
@@ -17,7 +17,7 @@ public static class OrderLineTypes
 
 public class OrderLineState : StateConstant
 {
-    internal OrderLineState(string value) : base(value, Contexts.States.OrderLine) { }
+    internal OrderLineState(string value) : base(value, Contexts.OrderLine) { }
 }
 
 public static class OrderLineStates

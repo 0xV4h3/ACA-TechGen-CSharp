@@ -2,7 +2,7 @@
 
 public class TransportType : TypeConstant
 {
-    internal TransportType(string value) : base(value, Contexts.Types.Transport) { }
+    internal TransportType(string value) : base(value, Contexts.Transport) { }
 }
 
 public static class TransportTypes
@@ -17,7 +17,7 @@ public static class TransportTypes
 
 public class TransportState : StateConstant
 {
-    internal TransportState(string value) : base(value, Contexts.States.Transport) { }
+    internal TransportState(string value) : base(value, Contexts.Transport) { }
 }
 
 public static class TransportStates

@@ -2,7 +2,7 @@
 
 public class StockType : TypeConstant
 {
-    internal StockType(string value) : base(value, Contexts.Types.Stock) { }
+    internal StockType(string value) : base(value, Contexts.Stock) { }
 }
 
 public static class StockTypes
@@ -17,7 +17,7 @@ public static class StockTypes
 
 public class StockState : StateConstant
 {
-    internal StockState(string value) : base(value, Contexts.States.Stock) { }
+    internal StockState(string value) : base(value, Contexts.Stock) { }
 }
 
 public static class StockStates

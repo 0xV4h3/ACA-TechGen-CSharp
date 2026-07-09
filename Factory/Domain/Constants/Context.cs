@@ -1,29 +1,34 @@
 ﻿namespace Domain.Constants;
 
-public abstract class Context(string name)
+public class Context(string name)
 {
     public string Name { get; } = name;
     
-    private readonly Dictionary<string, Constant> _constants = new(StringComparer.OrdinalIgnoreCase);
-
-    internal void AddConstant(Constant constant)
+    private readonly Dictionary<ConstantKind, Dictionary<string, Constant>> _categories = new()
     {
-        _constants[constant.Value] = constant;
+        { ConstantKind.Type, new(StringComparer.OrdinalIgnoreCase) },
+        { ConstantKind.State, new(StringComparer.OrdinalIgnoreCase) },
+        { ConstantKind.Quality, new(StringComparer.OrdinalIgnoreCase) },
+        { ConstantKind.Capacity, new(StringComparer.OrdinalIgnoreCase) }
+    };
+
+    internal void AddConstant(Constant constant, ConstantKind kind)
+    {
+        _categories[kind][constant.Value] = constant;
     }
 
-    public Constant? Get(string constantValue) => _constants.GetValueOrDefault(constantValue);
+    public Constant? Get(string constantValue, ConstantKind kind) 
+        => _categories[kind].GetValueOrDefault(constantValue);
 
-    public IEnumerable<Constant> GetAll() => _constants.Values;
-    
-    public IEnumerable<string> GetAllString() => _constants.Keys;
-    
-    public bool IsValid(string value)
+    public bool IsValid(string value, ConstantKind kind)
     {
         if (value == null) return false;
-        return _constants.ContainsKey(value);
+        return _categories[kind].ContainsKey(value);
     }
-}
 
-public class TypeContext(string name) : Context(name) { }
-public class StateContext(string name) : Context(name) { }
-public class QualityContext(string name) : Context(name) { }
+    public IEnumerable<Constant> GetAll(ConstantKind kind) 
+        => _categories[kind].Values;
+    
+    public IEnumerable<string> GetAllString(ConstantKind kind) 
+        => _categories[kind].Keys;
+}

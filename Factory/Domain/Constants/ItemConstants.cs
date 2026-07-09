@@ -2,7 +2,7 @@
 
 public class ItemType : TypeConstant
 {
-    internal ItemType(string value) : base(value, Contexts.Types.Item) { }
+    internal ItemType(string value) : base(value, Contexts.Item) { }
 }
 
 public static class ItemTypes
@@ -17,7 +17,7 @@ public static class ItemTypes
 
 public class ItemState : StateConstant
 {
-    internal ItemState(string value) : base(value, Contexts.States.Item) { }
+    internal ItemState(string value) : base(value, Contexts.Item) { }
 }
 
 public static class ItemStates
@@ -37,7 +37,7 @@ public static class ItemStates
 
 public class ItemQuality : QualityConstant
 {
-    internal ItemQuality(string value) : base(value, Contexts.Qualities.Item) { }
+    internal ItemQuality(string value) : base(value, Contexts.Item) { }
 }
 
 public static class ItemQualities
