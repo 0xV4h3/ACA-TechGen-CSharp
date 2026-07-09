@@ -32,7 +32,7 @@ public static class RegistryExtensions
         
         if (!registry.IsValid(type.Value, type.Context, type.Kind))
         {
-            throw new TypeException($"Invalid type '{type.Value}' for context '{type.Context.Name}'.", type);
+            throw new TypeException($"Invalid type '{type.Value}' of kind '{type.Kind}' for context '{type.Context.Name}'.", type); 
         }
     }
     
@@ -42,7 +42,7 @@ public static class RegistryExtensions
         
         if (!registry.IsValid(state.Value, state.Context, state.Kind))
         {
-            throw new StateException($"Invalid state '{state.Value}' for context '{state.Context.Name}'.", state);
+            throw new StateException($"Invalid state '{state.Value}' of kind '{state.Kind}' for context '{state.Context.Name}'.", state);
         }
     }
 }
