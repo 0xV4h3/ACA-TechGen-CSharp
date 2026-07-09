@@ -12,6 +12,7 @@ public static class RegistryExtensions
     
     public static void Validate(this IRegistry registry, TypeConstant type, StateConstant state)
     {
+        registry.EnsureRegistry();
         if (type == null) throw new ArgumentNullException(nameof(type));
         if (state == null) throw new ArgumentNullException(nameof(state));
         
@@ -22,11 +23,16 @@ public static class RegistryExtensions
                 $"together with State from context '{state.Context.Name}'.");
         }
 
-        ValidateType(registry, type);
-        ValidateState(registry, state);
+        ValidateTypeInternal(registry, type);
+        ValidateStateInternal(registry, state);
     }
 
     public static void ValidateType(this IRegistry registry, TypeConstant type)
+    {
+        registry.EnsureRegistry();
+        ValidateTypeInternal(registry, type);
+    }
+    private static void ValidateTypeInternal(this IRegistry registry, TypeConstant type)
     {
         if (type == null) throw new ArgumentNullException(nameof(type));
         
@@ -37,6 +43,11 @@ public static class RegistryExtensions
     }
     
     public static void ValidateState(this IRegistry registry, StateConstant state)
+    {
+        registry.EnsureRegistry();
+        ValidateStateInternal(registry, state);
+    }
+    private static void ValidateStateInternal(this IRegistry registry, StateConstant state)
     {
         if (state == null) throw new ArgumentNullException(nameof(state));
         
