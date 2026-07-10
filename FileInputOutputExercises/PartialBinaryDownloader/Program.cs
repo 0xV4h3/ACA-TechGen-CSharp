@@ -6,12 +6,12 @@ class Program
 {
     static void Main(string[] args)
     {
-        string filePath = Path.Combine(Environment.CurrentDirectory, "partial-download.bin");
+        string dir = Path.Combine(Environment.CurrentDirectory, "partial-download.bin");
 
         byte[] blockA = Encoding.UTF8.GetBytes("Geralt of Rivia : Geralt is a witcher, a magical mutant made for hunting and killing monsters");
         byte[] blockB = Encoding.UTF8.GetBytes("Yennefer of Vengerberg : Yennefer is a powerful sorceress, the true love of the witcher Geralt of Rivia, and a fierce, motherly figure to the young Ciri");
 
-        using (var fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
+        using (var fs = new FileStream(dir, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
         {
             fs.Position = 0;
             fs.Write(blockA, 0, blockA.Length);
@@ -25,7 +25,7 @@ class Program
         bool isACorrect;
         bool isBCorrect;
 
-        using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+        using (var fs = new FileStream(dir, FileMode.Open, FileAccess.Read, FileShare.Read))
         {
             byte[] readA = new byte[blockA.Length];
             fs.Position = 0;
