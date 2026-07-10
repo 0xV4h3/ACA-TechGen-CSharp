@@ -4,21 +4,21 @@ using Domain.Registries;
 
 namespace FactoryCore;
 
-public class MachineA(IRegistry registry) : SingleTypeMachine(MachineTypes.MachineA, MachineStates.Idle, ItemTypes.A, registry)
+public class MachineA() : SingleTypeMachine(MachineTypes.MachineA, MachineStates.Idle, ItemTypes.A)
 {
     protected override Item CreateItem(int id) => new ItemA(id);
 }
-public class MachineB(IRegistry registry) : SingleTypeMachine(MachineTypes.MachineB, MachineStates.Idle, ItemTypes.B, registry)
+public class MachineB() : SingleTypeMachine(MachineTypes.MachineB, MachineStates.Idle, ItemTypes.B)
 {
     protected override Item CreateItem(int id) => new ItemB(id);
 }
-public class MachineC(IRegistry registry) : SingleTypeMachine(MachineTypes.MachineC, MachineStates.Idle, ItemTypes.C, registry)
+public class MachineC() : SingleTypeMachine(MachineTypes.MachineC, MachineStates.Idle, ItemTypes.C)
 {
     protected override Item CreateItem(int id) => new ItemC(id);
 }
 
-public class MachineAB(IRegistry registry) 
-    : MultiTypeMachine(MachineTypes.Create("MachineAB"), MachineStates.Idle, [ItemTypes.A, ItemTypes.B], registry)
+public class MachineAB() 
+    : MultiTypeMachine(MachineTypes.Create("MachineAB"), MachineStates.Idle, [ItemTypes.A, ItemTypes.B])
 {
     protected override Item CreateItem(int id, ItemType type)
     {

@@ -5,17 +5,8 @@ using Domain.Models.Abstractions;
 
 namespace Domain.Models;
 
-public abstract class Machine : Entity, IMachine
+public abstract class Machine(MachineType type, MachineState state) : Entity(type, state), IMachine
 {
-    protected Machine(MachineType type, MachineState state, IRegistry registry) 
-        : base(type, state)
-    {
-        if (registry == null) throw new ArgumentNullException(nameof(registry));
-        
-        if (!registry.IsValid(type.Value, Contexts.Types.Machine))
-            throw new TypeException($"Invalid machine type '{type.Value}' for context '{Contexts.Types.Machine.Name}'", type);
-    }
-
     protected virtual bool IsMachineReady() => State != MachineStates.Maintenance;
     protected virtual void EnsureMachineIsReady()
     {
@@ -46,9 +37,8 @@ public abstract class Machine : Entity, IMachine
 
 public abstract class SingleTypeMachine(
     MachineType type, 
-    MachineState state, 
-    ItemType supportedItem, 
-    IRegistry registry) : Machine(type, state, registry), ISingleTypeMachine
+    MachineState state,
+    ItemType supportedItem) : Machine(type, state), ISingleTypeMachine
 {
     public ItemType SupportedItemType { get; } = supportedItem ?? throw new ArgumentNullException(nameof(supportedItem));
     
@@ -70,8 +60,8 @@ public abstract class MultiTypeMachine : Machine, IMultiTypeMachine
 {
     public List<ItemType> SupportedItemTypes { get; } = [];
 
-    protected MultiTypeMachine(MachineType type, MachineState state, List<ItemType> supportedItems, IRegistry registry) 
-        : base(type, state, registry)
+    protected MultiTypeMachine(MachineType type, MachineState state, List<ItemType> supportedItems) 
+        : base(type, state)
     {
         if (supportedItems == null || supportedItems.Count == 0)
             throw new ArgumentException("MultiTypeMachine must support at least one item type.", nameof(supportedItems));
