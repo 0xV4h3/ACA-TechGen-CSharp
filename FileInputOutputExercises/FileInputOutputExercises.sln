@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyReportArchiver", "DailyReportArchiver\DailyReportArchiver.csproj", "{FD079327-02ED-466B-A0DA-CD6CF2F53E20}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InboxScanner", "InboxScanner\InboxScanner.csproj", "{474B67D0-3E23-49CD-82C2-0F2926B972F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{FD079327-02ED-466B-A0DA-CD6CF2F53E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD079327-02ED-466B-A0DA-CD6CF2F53E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD079327-02ED-466B-A0DA-CD6CF2F53E20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{474B67D0-3E23-49CD-82C2-0F2926B972F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{474B67D0-3E23-49CD-82C2-0F2926B972F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{474B67D0-3E23-49CD-82C2-0F2926B972F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{474B67D0-3E23-49CD-82C2-0F2926B972F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
