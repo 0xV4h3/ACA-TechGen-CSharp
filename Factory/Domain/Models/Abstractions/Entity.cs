@@ -3,18 +3,12 @@ using Domain.Exceptions;
 
 namespace Domain.Models.Abstractions;
 
-public abstract class Entity
+public abstract class Entity(TypeConstant type, StateConstant state) : IEntity
 {
-    public TypeConstant Type { get; init; }
-    public StateConstant State { get; private set; }
+    public TypeConstant Type { get; init; } = type ?? throw new ArgumentNullException(nameof(type));
+    public StateConstant State { get; protected set; } = state ?? throw new ArgumentNullException(nameof(state));
 
-    protected Entity(TypeConstant type, StateConstant state)
-    {
-        Type = type ?? throw new ArgumentNullException(nameof(type));
-        State = state ?? throw new ArgumentNullException(nameof(state));
-    }
-
-    public void ChangeState(StateConstant newState)
+    protected void ChangeState(StateConstant newState)
     {
         if (newState == null) throw new ArgumentNullException(nameof(newState));
         
