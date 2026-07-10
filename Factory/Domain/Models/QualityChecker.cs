@@ -1,6 +1,5 @@
 ﻿using Domain.Constants;
 using Domain.Registries;
-using Domain.Exceptions;
 using Domain.Models.Quality;
 using Domain.Models.Abstractions;
 
@@ -24,18 +23,15 @@ public abstract class QualityChecker : Entity
         Action<IQualitative> onScrap)
         : base(type, state)
     {
-        if (registry == null) throw new ArgumentNullException(nameof(registry));
+        registry.Validate(type, state);
         
-        if (!registry.IsValid(type.Value, Contexts.Types.QualityChecker))
-            throw new TypeException($"Invalid quality checker type '{type.Value}' for context '{Contexts.Types.QualityChecker.Name}'", type);
-
         if (thresholds == null || !thresholds.Any())
             throw new ArgumentException("Quality checker must have at least one quality threshold rule.");
         
-        _thresholds = thresholds.OrderByDescending(t => t.MinPercentage).ToList();
         _onPassed = onPassed ?? throw new ArgumentNullException(nameof(onPassed));
         _onRepair = onRepair ?? throw new ArgumentNullException(nameof(onRepair));
         _onScrap = onScrap ?? throw new ArgumentNullException(nameof(onScrap));
+        _thresholds = thresholds.OrderByDescending(t => t.MinPercentage).ToList();
     }
     
     protected virtual bool IsCheckerReady() => State != QualityCheckerStates.Maintenance;
