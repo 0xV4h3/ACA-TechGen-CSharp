@@ -2,8 +2,26 @@
 
 public static class SharedConfig
 {
-    public static readonly string DefaultExchangePath = "shared_memory.txt";
-    public static readonly string MetadataConfigPath = "app_config.txt";
+    private static readonly string SharedDirectoryPath;
+    public static readonly string DefaultExchangePath;
+    public static readonly string MetadataConfigPath;
+
+    static SharedConfig()
+    {
+        string baseDir = AppContext.BaseDirectory;
+        DirectoryInfo? solutionDir = Directory.GetParent(baseDir)?.Parent?.Parent?.Parent;
+        
+        if (solutionDir != null)
+            SharedDirectoryPath = Path.Combine(solutionDir.FullName, "Domain", "Shared");
+        else
+            SharedDirectoryPath = Path.Combine(baseDir, "Shared");
+        
+        if (!Directory.Exists(SharedDirectoryPath))
+            Directory.CreateDirectory(SharedDirectoryPath);
+        
+        DefaultExchangePath = Path.Combine(SharedDirectoryPath, "shared_memory.txt");
+        MetadataConfigPath = Path.Combine(SharedDirectoryPath, "app_config.txt");
+    }
 
     public static (string? Mode, string FilePath) ParseArguments(string[] args)
     {
