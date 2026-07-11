@@ -19,4 +19,6 @@ public static class WriterWorker
             
         }
     }
+
+    private static bool Exit(string input) => input.Equals("exit", StringComparison.OrdinalIgnoreCase);
 }
