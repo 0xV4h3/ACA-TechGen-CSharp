@@ -21,4 +21,7 @@ public static class WriterWorker
     }
 
     private static bool Exit(string input) => input.Equals("exit", StringComparison.OrdinalIgnoreCase);
+
+    private static bool Flush(string input) => input.Equals("flush", StringComparison.OrdinalIgnoreCase) || 
+                                               input.Equals("--flush", StringComparison.OrdinalIgnoreCase);
 }
