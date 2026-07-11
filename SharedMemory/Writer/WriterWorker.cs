@@ -20,6 +20,15 @@ public static class WriterWorker
         }
     }
 
+    private static void InstantDisplay(FileStream fs, StreamWriter sw)
+    {
+        
+    }
+    private static void BufferedDisplay(FileStream fs, StreamWriter sw)
+    {
+        
+    }
+    
     private static bool Exit(string input) => input.Equals("exit", StringComparison.OrdinalIgnoreCase);
 
     private static bool Flush(string input) => input.Equals("flush", StringComparison.OrdinalIgnoreCase) || 
