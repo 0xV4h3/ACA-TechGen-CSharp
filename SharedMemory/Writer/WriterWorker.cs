@@ -13,10 +13,18 @@ public static class WriterWorker
         {
             using var fs = new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
             using var sw = new StreamWriter(fs, Encoding.UTF8);
+            
+            Console.Clear();
+            Console.WriteLine("=== WRITER APPLICATION ===");
+            Console.WriteLine($"Mode: {mode} | File: {filePath}\n");
+            Console.WriteLine("Type messages below. Type 'exit' to quit.\n");
+            
+            
         }
         finally
         {
-            
+            if (File.Exists(filePath)) File.Delete(filePath);
+            if (File.Exists(SharedConfig.MetadataConfigPath)) File.Delete(SharedConfig.MetadataConfigPath);
         }
     }
 
