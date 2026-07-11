@@ -22,11 +22,10 @@ public static class WriterWorker
             if (mode == "2")
             {
                 Console.WriteLine("Type 'flush' or '--flush' to deliver buffered messages.\n");
-                BufferedDisplay(fs, sw);
+                BufferedDisplay(sw);
             }
             else
-                InstantDisplay(fs, sw);
-            
+                InstantDisplay(sw);
         }
         finally
         {
@@ -35,7 +34,7 @@ public static class WriterWorker
         }
     }
 
-    private static void InstantDisplay(FileStream fs, StreamWriter sw)
+    private static void InstantDisplay(StreamWriter sw)
     {
         bool isExit = false;
 
@@ -59,7 +58,7 @@ public static class WriterWorker
             }
         }
     }
-    private static void BufferedDisplay(FileStream fs, StreamWriter sw)
+    private static void BufferedDisplay(StreamWriter sw)
     {
         bool isExit = false;
 
