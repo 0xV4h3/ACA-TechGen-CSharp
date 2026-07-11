@@ -19,6 +19,13 @@ public static class WriterWorker
             Console.WriteLine($"Mode: {mode} | File: {filePath}\n");
             Console.WriteLine("Type messages below. Type 'exit' to quit.\n");
             
+            if (mode == "2")
+            {
+                Console.WriteLine("Type 'flush' or '--flush' to deliver buffered messages.\n");
+                BufferedDisplay(fs, sw);
+            }
+            else
+                InstantDisplay(fs, sw);
             
         }
         finally
@@ -30,7 +37,27 @@ public static class WriterWorker
 
     private static void InstantDisplay(FileStream fs, StreamWriter sw)
     {
-        
+        bool isExit = false;
+
+        while (!isExit)
+        {
+            Console.Write("Write: ");
+            string? input = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(input)) continue;
+
+            if (Exit(input))
+            {
+                sw.WriteLine("[SHUTDOWN]");
+                sw.Flush();
+                isExit = true;
+            }
+            else
+            {
+                sw.WriteLine(input);
+                sw.Flush();
+            }
+        }
     }
     private static void BufferedDisplay(FileStream fs, StreamWriter sw)
     {
