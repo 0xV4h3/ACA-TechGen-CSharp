@@ -9,7 +9,7 @@ public static class SharedConfig
     static SharedConfig()
     {
         string baseDir = AppContext.BaseDirectory;
-        DirectoryInfo? solutionDir = Directory.GetParent(baseDir)?.Parent?.Parent?.Parent;
+        DirectoryInfo? solutionDir = Directory.GetParent(baseDir)?.Parent?.Parent?.Parent?.Parent;
         
         if (solutionDir != null)
             SharedDirectoryPath = Path.Combine(solutionDir.FullName, "Domain", "Shared");
