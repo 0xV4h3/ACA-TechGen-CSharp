@@ -61,7 +61,32 @@ public static class WriterWorker
     }
     private static void BufferedDisplay(FileStream fs, StreamWriter sw)
     {
-        
+        bool isExit = false;
+
+        while (!isExit)
+        {
+            Console.Write("Write: ");
+            string? input = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(input)) continue;
+
+            if (Exit(input))
+            {
+                sw.WriteLine("[SHUTDOWN]");
+                sw.Flush();
+                isExit = true;
+            }
+            else if (Flush(input))
+            {
+                sw.WriteLine("[FLUSH]");
+                sw.Flush();
+            }
+            else
+            {
+                sw.WriteLine(input);
+                sw.Flush();
+            }
+        }
     }
     
     private static bool Exit(string input) => input.Equals("exit", StringComparison.OrdinalIgnoreCase);
