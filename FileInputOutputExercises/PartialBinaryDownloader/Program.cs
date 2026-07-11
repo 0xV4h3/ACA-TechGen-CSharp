@@ -29,11 +29,11 @@ class Program
         {
             byte[] readA = new byte[blockA.Length];
             fs.Position = 0;
-            fs.Read(readA, 0, readA.Length);
+            fs.ReadExactly(readA, 0, readA.Length);
 
             byte[] readB = new byte[blockB.Length];
             fs.Position = 1024;
-            fs.Read(readB, 0, readB.Length);
+            fs.ReadExactly(readB, 0, readB.Length);
 
             isACorrect = readA.SequenceEqual(blockA);
             isBCorrect = readB.SequenceEqual(blockB);
