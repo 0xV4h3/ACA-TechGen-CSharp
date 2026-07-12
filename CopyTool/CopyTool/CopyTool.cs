@@ -29,7 +29,7 @@ public static class CopyTool
             fileWriter.Write(buffer, 0, bytesRead);
 
             ulong currentPosition = (ulong)fileReader.Position;
-            string currentSizeStr = ByteFormatter.Format(currentPosition, "F1");
+            string currentSizeStr = ByteFormatter.Format(currentPosition);
             progressBar.Report(currentPosition, $"{currentSizeStr} / {totalSizeStr}");
         }
     }
