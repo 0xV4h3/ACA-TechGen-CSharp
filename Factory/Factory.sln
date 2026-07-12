@@ -6,8 +6,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryCore", "FactoryCore\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulation", "Simulation\Simulation.csproj", "{623B0045-4B70-45D9-BF9C-7289E4CC78CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{F28B0FCA-9112-440E-91EF-4B7DBD10EC04}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +24,5 @@ Global
 		{623B0045-4B70-45D9-BF9C-7289E4CC78CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{623B0045-4B70-45D9-BF9C-7289E4CC78CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{623B0045-4B70-45D9-BF9C-7289E4CC78CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F28B0FCA-9112-440E-91EF-4B7DBD10EC04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F28B0FCA-9112-440E-91EF-4B7DBD10EC04}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F28B0FCA-9112-440E-91EF-4B7DBD10EC04}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F28B0FCA-9112-440E-91EF-4B7DBD10EC04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
