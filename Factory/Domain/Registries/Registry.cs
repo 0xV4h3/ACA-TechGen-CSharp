@@ -61,6 +61,12 @@ public class Registry : IRegistry
                && registeredContext.IsValid(value, kind);
     }
 
+    public Constant? Get(string constantValue, Context context, ConstantKind kind)
+    {
+        return _contexts.TryGetValue(context.Name, out var registeredContext)
+            ? registeredContext.Get(constantValue, kind) : null;
+    }
+    
     public IEnumerable<Constant> GetAll(Context context, ConstantKind kind)
     {
         return _contexts.TryGetValue(context.Name, out var registeredContext) 
