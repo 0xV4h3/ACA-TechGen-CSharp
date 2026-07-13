@@ -52,7 +52,6 @@ public static class ReaderWorker
 
     private static void BufferedRead(StreamReader sr)
     {
-        List<string> buffer = new();
 
         bool shutdown = false;
 
