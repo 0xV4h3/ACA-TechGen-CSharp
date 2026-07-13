@@ -27,6 +27,7 @@ public static class WriterWorker
         }
         finally
         {
+            TryDelete(filePath);
             TryDelete(SharedConfig.MetadataConfigPath);
         }
     }
@@ -88,7 +89,7 @@ public static class WriterWorker
     private static bool Exit(string input) => input.Equals("exit", StringComparison.OrdinalIgnoreCase);
 
     private static bool Flush(string input) => input.Equals("flush", StringComparison.OrdinalIgnoreCase) ||
-                                               input.Equals("--flush", StringComparison.OrdinalIgnoreCase);
+                                               input.Equals("-f", StringComparison.OrdinalIgnoreCase);
     private static void TryDelete(string path)
     {
         try
