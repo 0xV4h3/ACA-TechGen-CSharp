@@ -7,18 +7,16 @@ public static class WriterWorker
 {
     public static void Start(string mode, string filePath)
     {
-        if (File.Exists(filePath)) File.Delete(filePath);
-
         try
         {
-            using var fs = new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+            using var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
             using var sw = new StreamWriter(fs, Encoding.UTF8);
-            
+
             Console.Clear();
             Console.WriteLine("=== WRITER APPLICATION ===");
             Console.WriteLine($"Mode: {mode} | File: {filePath}\n");
             Console.WriteLine("Type messages below. Type 'exit' to quit.\n");
-            
+
             if (mode == "2")
             {
                 Console.WriteLine("Type 'flush' or '--flush' to deliver buffered messages.\n");
@@ -29,8 +27,7 @@ public static class WriterWorker
         }
         finally
         {
-            if (File.Exists(filePath)) File.Delete(filePath);
-            if (File.Exists(SharedConfig.MetadataConfigPath)) File.Delete(SharedConfig.MetadataConfigPath);
+            TryDelete(SharedConfig.MetadataConfigPath);
         }
     }
 
@@ -87,9 +84,19 @@ public static class WriterWorker
             }
         }
     }
-    
+
     private static bool Exit(string input) => input.Equals("exit", StringComparison.OrdinalIgnoreCase);
 
-    private static bool Flush(string input) => input.Equals("flush", StringComparison.OrdinalIgnoreCase) || 
+    private static bool Flush(string input) => input.Equals("flush", StringComparison.OrdinalIgnoreCase) ||
                                                input.Equals("--flush", StringComparison.OrdinalIgnoreCase);
+    private static void TryDelete(string path)
+    {
+        try
+        {
+            if (File.Exists(path))
+                File.Delete(path);
+        }
+        catch (IOException) { }
+        catch (UnauthorizedAccessException) { }
+    }
 }
