@@ -23,10 +23,11 @@ public class ConsoleProgressBar : IProgressReporter, IDisposable
         Console.CursorVisible = false;
     }
 
-    public void Start() => _stopwatch.Start();
-
     public void Report(ulong currentTick, string customMessage = "")
     {
+        if (!_stopwatch.IsRunning && !_finished)
+            _stopwatch.Start();
+
         if (_finished || (currentTick % _updateIntervalTicks != 0 && currentTick != _totalTicks))
             return;
 

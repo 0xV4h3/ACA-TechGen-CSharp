@@ -8,9 +8,6 @@ public static class CopyTool
         using var fileWriter = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None);
 
         ulong totalBytes = (ulong)fileReader.Length;
-        
-        progressBar?.Start();
-
         byte[] buffer = new byte[bufferSize];
         int bytesRead;
         
