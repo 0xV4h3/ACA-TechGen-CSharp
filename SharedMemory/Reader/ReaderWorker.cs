@@ -1,5 +1,5 @@
-﻿using Domain.Config;
-using System.Text;
+﻿using System.Text;
+using Domain.Config;
 
 namespace Reader;
 
@@ -13,32 +13,21 @@ public static class ReaderWorker
         Console.WriteLine($"File: {filePath}\n");
 
         while (!File.Exists(filePath))
-        {
             Thread.Sleep(100);
 
-            var metadata = SharedConfig.ReadMetadata();
-            if (metadata.Mode == null) return;
-        }
-
         using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+        using (var sr = new StreamReader(fs, Encoding.UTF8))
         {
-            fs.Seek(0, SeekOrigin.End);
-
-            using var sr = new StreamReader(fs, Encoding.UTF8);
-
-            if (mode == "2")
-                BufferedRead(sr, filePath);
-            else
-                InstantRead(sr, filePath);
+            fs.Position = fs.Length;
+            if (mode == "2") BufferedRead(sr);
+            else InstantRead(sr);
         }
 
         TryDelete(filePath);
         TryDelete(SharedConfig.MetadataConfigPath);
-
-        Console.WriteLine("\nApplication finished. Press any key to exit...");
     }
 
-    private static void InstantRead(StreamReader sr, string filePath)
+    private static void InstantRead(StreamReader sr)
     {
         bool shutdown = false;
 
@@ -49,11 +38,6 @@ public static class ReaderWorker
             if (line == null)
             {
                 Thread.Sleep(100);
-
-                if (!File.Exists(filePath))
-                {
-                    break;
-                }
                 continue;
             }
 
@@ -70,7 +54,7 @@ public static class ReaderWorker
         Console.WriteLine("\nWriter disconnected.");
     }
 
-    private static void BufferedRead(StreamReader sr, string filePath)
+    private static void BufferedRead(StreamReader sr)
     {
         List<string> buffer = new();
         bool shutdown = false;
@@ -82,11 +66,6 @@ public static class ReaderWorker
             if (line == null)
             {
                 Thread.Sleep(100);
-
-                if (!File.Exists(filePath))
-                {
-                    break;
-                }
                 continue;
             }
 
