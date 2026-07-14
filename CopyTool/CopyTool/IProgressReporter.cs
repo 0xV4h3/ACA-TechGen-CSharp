@@ -1,6 +1,6 @@
 ﻿namespace CopyTool;
 
-public interface IProgressReporter
+public interface IProgressReporter : IDisposable
 {
     void Report(ulong currentProgress, string message);
 }

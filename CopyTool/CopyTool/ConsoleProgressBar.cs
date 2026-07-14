@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 namespace CopyTool;
 
-public class ConsoleProgressBar : IProgressReporter, IDisposable
+public class ConsoleProgressBar : IProgressReporter
 {
     private readonly ulong _totalTicks;
     private readonly int _barLength;
