@@ -19,7 +19,7 @@ public static class WriterWorker
 
             if (mode == "2")
             {
-                Console.WriteLine("Type 'flush' or '--flush' to deliver buffered messages.\n");
+                Console.WriteLine("Type 'flush' or '-f' to deliver buffered messages.\n");
                 BufferedDisplay(sw);
             }
             else
