@@ -8,17 +8,29 @@ public class ConsoleProgressBar : IProgressReporter
     private readonly int _barLength;
     private readonly Stopwatch _stopwatch;
     private readonly ulong _updateIntervalTicks;
-    private readonly bool _isByteMode;
+    private readonly Func<double, string> _speedFormatter;
     private int _lastLineLength;
     private bool _disposed;
     private bool _finished;
     
-    public ConsoleProgressBar(ulong totalTicks, int barLength = 30, ulong updateIntervalTicks = 1, bool isByteMode = false)
+    public ConsoleProgressBar(
+        ulong totalTicks,
+        int barLength = 30,
+        ulong updateIntervalTicks = 1,
+        Func<double, string>? speedFormatter = null)
     {
         _totalTicks = totalTicks;
         _barLength = barLength;
         _updateIntervalTicks = updateIntervalTicks;
-        _isByteMode = isByteMode;
+        
+        _speedFormatter = speedFormatter ?? (speed => speed switch
+        {
+            >= 1_000_000_000 => $"{speed / 1_000_000_000:F1} G it/s",
+            >= 1_000_000 => $"{speed / 1_000_000:F1} M it/s",
+            >= 1_000 => $"{speed / 1_000:F1} K it/s",
+            _ => $"{speed:N0} it/s"
+        });
+            
         _stopwatch = new Stopwatch();
         Console.CursorVisible = false;
     }
@@ -54,22 +66,8 @@ public class ConsoleProgressBar : IProgressReporter
         }
 
         string bar = new string('█', progressChars) + new string('░', _barLength - progressChars);
-        
-        string speedStr;
-        if (_isByteMode)
-        {
-            speedStr = $"{ByteFormatter.Format(speed, "F2")}/s";
-        }
-        else
-        {
-            speedStr = speed switch
-            {
-                >= 1_000_000_000 => $"{speed / 1_000_000_000:F1} G it/s",
-                >= 1_000_000 => $"{speed / 1_000_000:F1} M it/s",
-                >= 1_000 => $"{speed / 1_000:F1} K it/s",
-                _ => $"{speed:N0} it/s"
-            };
-        }
+
+        string speedStr = _speedFormatter(speed);
         
         string output = $"\r[{bar}] {progress:P1} | Speed: {speedStr} | Remaining: {etaStr} | {customMessage}";
         

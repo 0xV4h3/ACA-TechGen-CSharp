@@ -43,7 +43,7 @@ class Program
             using var progressBar = new ConsoleProgressBar(
                 totalTicks: totalBytes,
                 updateIntervalTicks: updateInterval, 
-                isByteMode: true
+                speedFormatter: s => $"{ByteFormatter.Format(s, "F2")}/s"
             );
             
             CopyTool.Copy(sourcePath, destinationPath, bufferSize, progressBar);
