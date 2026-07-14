@@ -22,6 +22,7 @@ public static class ReaderWorker
             if (mode == "2") BufferedRead(sr);
             else InstantRead(sr);
         }
+        Console.WriteLine("\nWriter disconnected.");
 
         TryDelete(filePath);
         TryDelete(SharedConfig.MetadataConfigPath);
@@ -50,8 +51,6 @@ public static class ReaderWorker
                 Console.WriteLine(line);
             }
         }
-
-        Console.WriteLine("\nWriter disconnected.");
     }
 
     private static void BufferedRead(StreamReader sr)
@@ -86,8 +85,6 @@ public static class ReaderWorker
                 buffer.Add(line);
             }
         }
-
-        Console.WriteLine("\nWriter disconnected.");
     }
 
     private static void TryDelete(string path)
