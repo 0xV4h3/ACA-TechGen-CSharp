@@ -35,7 +35,18 @@ class Program
         try
         {
             Console.WriteLine("Copying file...");
-            CopyTool.Copy(sourcePath, destinationPath, bufferSize);
+            
+            FileInfo fileInfo = new FileInfo(sourcePath);
+            ulong totalBytes = (ulong)fileInfo.Length;
+            ulong updateInterval = (ulong)bufferSize * 50;
+            
+            using var progressBar = new ConsoleProgressBar(
+                totalTicks: totalBytes,
+                updateIntervalTicks: updateInterval, 
+                isByteMode: true
+            );
+            
+            CopyTool.Copy(sourcePath, destinationPath, bufferSize, progressBar);
             Console.WriteLine("Copying completed successfully.");
         }
         catch (Exception ex)
