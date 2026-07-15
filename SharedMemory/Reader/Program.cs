@@ -6,21 +6,18 @@ class Program
 {
     static void Main(string[] args)
     {
-        string? mode = null;
         string? filePath = null;
 
         Console.WriteLine("Waiting for Writer...");
 
-        while (string.IsNullOrEmpty(mode) || string.IsNullOrEmpty(filePath))
+        while (string.IsNullOrEmpty(filePath))
         {
-            (mode, filePath) = SharedConfig.ReadMetadata();
+            (_, filePath) = SharedConfig.ReadMetadata();
 
-            if (string.IsNullOrEmpty(mode))
-            {
+            if (string.IsNullOrEmpty(filePath))
                 Thread.Sleep(200);
-            }
         }
 
-        ReaderWorker.Start(mode, filePath);
+        ReaderWorker.Start(filePath);
     }
 }

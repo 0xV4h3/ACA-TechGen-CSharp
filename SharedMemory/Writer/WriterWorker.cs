@@ -19,7 +19,7 @@ public static class WriterWorker
 
             if (mode == "2")
             {
-                Console.WriteLine("Type 'flush' or '-f' to deliver buffered messages.\n");
+                Console.WriteLine("Type 'flush' or '-f' to write buffered messages.\n");
                 BufferedDisplay(sw);
             }
             else
@@ -56,9 +56,11 @@ public static class WriterWorker
             }
         }
     }
+
     private static void BufferedDisplay(StreamWriter sw)
     {
         bool isExit = false;
+        List<string> buffer = new();
 
         while (!isExit)
         {
@@ -69,19 +71,28 @@ public static class WriterWorker
 
             if (Exit(input))
             {
+                if (buffer.Count > 0)
+                {
+                    foreach (var message in buffer)
+                        sw.WriteLine(message);
+                    buffer.Clear();
+                }
+
                 sw.WriteLine("[SHUTDOWN]");
                 sw.Flush();
                 isExit = true;
             }
             else if (Flush(input))
             {
-                sw.WriteLine("[FLUSH]");
+                foreach (var message in buffer)
+                    sw.WriteLine(message);
+
+                buffer.Clear();
                 sw.Flush();
             }
             else
             {
-                sw.WriteLine(input);
-                sw.Flush();
+                buffer.Add(input);
             }
         }
     }
@@ -90,6 +101,7 @@ public static class WriterWorker
 
     private static bool Flush(string input) => input.Equals("flush", StringComparison.OrdinalIgnoreCase) ||
                                                input.Equals("-f", StringComparison.OrdinalIgnoreCase);
+
     private static void TryDelete(string path)
     {
         try
