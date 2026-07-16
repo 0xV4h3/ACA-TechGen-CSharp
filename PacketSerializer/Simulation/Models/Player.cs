@@ -9,5 +9,5 @@ public class Player
     public string Name { get; init; } = string.Empty;
     public int Lvl { get; init; }
     
-    public override string ToString() => $"{Id} : {Name} : {Lvl } lvl : (X : {Coords.X}, Y : {Coords.Y})";
+    public override string ToString() => $"{Id} : {Name} : {Lvl} lvl : (X : {Coords.X}, Y : {Coords.Y})";
 }
