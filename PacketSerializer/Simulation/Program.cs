@@ -16,7 +16,7 @@ class Program
 
         string path = Path.Combine(Environment.CurrentDirectory, $"players_{DateTime.UtcNow:yyyyMMdd_HHmmss}.bin");
 
-        var packets = PlayerPacket.PlayersToPackets(players);
+        var packets = players.ToPackets();
         PacketSerializer.Serialize(path, packets);
 
         var restoredPackets = PacketSerializer.Deserialize(path);
@@ -26,12 +26,10 @@ class Program
             return;
         }
 
-        var restoredPlayers = PlayerPacket.PacketsToPlayers(restoredPackets);
+        var restoredPlayers = restoredPackets.ToPlayers();
         Console.WriteLine($"Restored players: {restoredPlayers.Count}");
 
         foreach (var player in restoredPlayers)
-        {
             Console.WriteLine(player);
-        }
     }
 }
