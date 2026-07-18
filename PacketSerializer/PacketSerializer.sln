@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serializer", "Serializer\Serializer.csproj", "{A101A191-81FD-496F-9DA3-047341AFC5BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulation", "Simulation\Simulation.csproj", "{3ECB0EBE-234B-484F-ABC8-806459342D5A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A101A191-81FD-496F-9DA3-047341AFC5BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A101A191-81FD-496F-9DA3-047341AFC5BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A101A191-81FD-496F-9DA3-047341AFC5BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A101A191-81FD-496F-9DA3-047341AFC5BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ECB0EBE-234B-484F-ABC8-806459342D5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ECB0EBE-234B-484F-ABC8-806459342D5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ECB0EBE-234B-484F-ABC8-806459342D5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ECB0EBE-234B-484F-ABC8-806459342D5A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
