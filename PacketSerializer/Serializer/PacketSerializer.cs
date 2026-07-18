@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Serializer.Hash;
 
 using Serializer;
 
@@ -7,10 +8,8 @@ public static class PacketSerializer
     private const int FormatVersion = 1;
     
     private const int MaxPayloadBytes = 100 * 1024 * 1024;
+    public static IHasher Hasher { get; set; } = Hashers.Default;
     
-    private const uint FnvOffsetBasis32 = 2166136261;
-    private const uint FnvPrime32 = 16777619;
-
     public static void Serialize(string path, IReadOnlyList<Packet> packets)
     {
         using FileStream fs = new(path, FileMode.Create, FileAccess.Write, FileShare.None);
@@ -38,7 +37,7 @@ public static class PacketSerializer
             packets = Deserialize(path, maxPayloadBytes);
             return packets is not null;
         }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or NotSupportedException)
+        catch (Exception)
         {
             packets = null;
             return false;
@@ -68,7 +67,7 @@ public static class PacketSerializer
             if (payload.Length != len) return null;
 
             int hash = r.ReadInt32();
-            if (ComputeFnv1a32(payload) != hash) return null;
+            if (Hasher.Hash(payload) != hash) return null;
 
             packets.Add(new Packet
             {
@@ -85,6 +84,18 @@ public static class PacketSerializer
         return savedChecksum == CalculateChecksum(packets) ? packets : null;
     }
 
+    public static Packet ToPacket(byte[] payload)
+    {
+        return new Packet
+        {
+            Payload = payload,
+            PayloadLength = payload.Length,
+            PayloadHash = Hasher.Hash(payload),
+            TimestampUnixMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+            Version = 1
+        };
+    }
+    
     public static Packet ToPacket<T>(T data, Func<T, byte[]> converter)
     {
         byte[] payload = converter(data);
@@ -92,24 +103,10 @@ public static class PacketSerializer
         {
             Payload = payload,
             PayloadLength = payload.Length,
-            PayloadHash = ComputeFnv1a32(payload),
+            PayloadHash = Hasher.Hash(payload),
             TimestampUnixMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
             Version = 1
         };
-    }
-
-    private static int ComputeFnv1a32(byte[] data)
-    {
-        unchecked
-        {
-            uint hash = FnvOffsetBasis32;
-            foreach (byte b in data)
-            {
-                hash ^= b;
-                hash *= FnvPrime32;
-            }
-            return (int)hash;
-        }
     }
 
     private static int CalculateChecksum(IEnumerable<Packet> packets)
