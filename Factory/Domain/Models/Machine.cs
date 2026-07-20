@@ -1,6 +1,4 @@
 ﻿using Domain.Constants;
-using Domain.Registries;
-using Domain.Exceptions;
 using Domain.Models.Abstractions;
 
 namespace Domain.Models;
