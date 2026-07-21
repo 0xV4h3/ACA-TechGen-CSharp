@@ -6,5 +6,3 @@ public enum QualityRoute
     Repair,
     Scrap
 }
-
-public record QualityThreshold(int MinPercentage, QualityRoute Route);
