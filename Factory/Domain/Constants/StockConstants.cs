@@ -30,3 +30,22 @@ public static class StockStates
     public static readonly StockState Overstock = new("Overstock");
     public static readonly StockState Restricted = new("Restricted");
 }
+
+public class StockCapacity : CapacityConstant
+{
+    internal StockCapacity(string value) : base(value, Contexts.Stock) { }
+}
+
+public static class StockCapacities
+{
+    public static StockCapacity Create(string value) => new(value);
+    
+    public static readonly StockCapacity Empty = new("Empty");
+    public static readonly StockCapacity Low = new("Low");
+    public static readonly StockCapacity BelowAverage = new("BelowAverage");
+    public static readonly StockCapacity Moderate = new("Moderate");
+    public static readonly StockCapacity AboveAverage = new("AboveAverage");
+    public static readonly StockCapacity High = new("High");
+    public static readonly StockCapacity Full = new("Full");
+    public static readonly StockCapacity Overloaded = new("Overloaded");
+}
