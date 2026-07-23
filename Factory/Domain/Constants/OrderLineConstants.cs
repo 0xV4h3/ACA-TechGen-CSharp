@@ -29,3 +29,19 @@ public static class OrderLineStates
     public static readonly OrderLineState Blocked = new("Blocked");
     public static readonly OrderLineState Disabled = new("Disabled");
 }
+
+public class OrderLineCapacity : CapacityConstant
+{
+    internal OrderLineCapacity(string value) : base(value, Contexts.OrderLine) { }
+}
+
+public static class OrderLineCapacities
+{
+    public static OrderLineCapacity Create(string value) => new(value);
+
+    public static readonly OrderLineCapacity Empty = new("Empty");
+    public static readonly OrderLineCapacity Low = new("Low");
+    public static readonly OrderLineCapacity Moderate = new("Moderate");
+    public static readonly OrderLineCapacity High = new("High");
+    public static readonly OrderLineCapacity Full = new("Full");
+}
