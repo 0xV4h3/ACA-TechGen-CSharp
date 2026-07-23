@@ -10,19 +10,22 @@ namespace Domain.Models;
 public abstract class QualityChecker : Entity
 {
     private readonly IRangeConverter<QualityRoute> _router;
-    private readonly Action<GradedConstant<ItemQuality>> _onPassed;
-    private readonly Action<GradedConstant<ItemQuality>> _onRepair;
-    private readonly Action<GradedConstant<ItemQuality>> _onScrap;
+    private readonly Action<Item> _onPassed;
+    private readonly Action<Item> _onRepair;
+    private readonly Action<Item> _onScrap;
 
     protected QualityChecker(
-        QualityCheckerType type, QualityCheckerState state,
-        List<RangeStep<QualityRoute>> thresholds, IRegistry registry,
-        Action<GradedConstant<ItemQuality>> onPassed,
-        Action<GradedConstant<ItemQuality>> onRepair,
-        Action<GradedConstant<ItemQuality>> onScrap)
+        QualityCheckerType type,
+        QualityCheckerState state,
+        List<RangeStep<QualityRoute>> thresholds,
+        IRegistry registry,
+        Action<Item> onPassed,
+        Action<Item> onRepair,
+        Action<Item> onScrap)
         : base(type, state)
     {
         registry.Validate(type, state);
+
         _router = new SteppedRangeConverter<QualityRoute>(thresholds);
         _onPassed = onPassed ?? throw new ArgumentNullException(nameof(onPassed));
         _onRepair = onRepair ?? throw new ArgumentNullException(nameof(onRepair));
@@ -36,18 +39,20 @@ public abstract class QualityChecker : Entity
             throw new InvalidOperationException("The quality checker is undergoing maintenance and cannot check.");
     }
 
-    public QualityRoute Check(GradedConstant<ItemQuality> quality)
+    public QualityRoute Check(Item item)
     {
-        if (quality == null) throw new ArgumentNullException(nameof(quality));
+        if (item == null) throw new ArgumentNullException(nameof(item));
         EnsureCheckerIsReady();
 
-        var route = _router.Convert(quality.Percentage);
+        var route = _router.Convert(item.Quality.Percentage);
+
         switch (route)
         {
-            case QualityRoute.Passed: _onPassed(quality); break;
-            case QualityRoute.Repair: _onRepair(quality); break;
-            case QualityRoute.Scrap:  _onScrap(quality); break;
+            case QualityRoute.Passed: _onPassed(item); break;
+            case QualityRoute.Repair: _onRepair(item); break;
+            case QualityRoute.Scrap:  _onScrap(item); break;
         }
+
         return route;
     }
 }
