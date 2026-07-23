@@ -9,9 +9,10 @@ public static class TransportTypes
 {
     public static TransportType Create(string value) => new(value);
     
-    public static readonly TransportType TransportA = new("TransportA");
-    public static readonly TransportType TransportB = new("TransportB");
-    public static readonly TransportType TransportC = new("TransportC");
+    public static readonly TransportType Truck = new("Truck");
+    public static readonly TransportType Ship = new("Ship");
+    public static readonly TransportType Plane = new("Plane");
+    public static readonly TransportType Motorcycle = new("Motorcycle");
     public static readonly TransportType Unknown = new("Unknown");
 }
 
