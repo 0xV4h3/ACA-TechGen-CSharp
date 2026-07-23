@@ -29,3 +29,19 @@ public static class StorageStates
     public static readonly StorageState LockedForOutbound = new("LockedForOutbound");
     public static readonly StorageState Closed = new("Closed");
 }
+
+public class StorageCapacity : CapacityConstant
+{
+    internal StorageCapacity(string value) : base(value, Contexts.Storage) { }
+}
+
+public static class StorageCapacities
+{
+    public static StorageCapacity Create(string value) => new(value);
+
+    public static readonly StorageCapacity Empty = new("Empty");
+    public static readonly StorageCapacity Low = new("Low");
+    public static readonly StorageCapacity Moderate = new("Moderate");
+    public static readonly StorageCapacity High = new("High");
+    public static readonly StorageCapacity Full = new("Full");
+}
