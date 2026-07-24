@@ -7,7 +7,7 @@ using Domain.Models.Abstractions;
 
 namespace Domain.Models;
 
-public abstract class QualityChecker : Entity
+public abstract class QualityChecker : Entity<QualityCheckerType, QualityCheckerState>
 {
     private readonly IRangeConverter<QualityRoute> _router;
     private readonly Action<Item> _onPassed;
