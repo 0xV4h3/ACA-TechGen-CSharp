@@ -4,8 +4,7 @@ namespace Domain.Registries;
 
 public abstract class RangeConverterRegistry<TResult>
 {
-    private readonly Dictionary<string, IRangeConverter<TResult>> _converters 
-        = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, IRangeConverter<TResult>> _converters = new(StringComparer.OrdinalIgnoreCase);
 
     public IRangeConverter<TResult> Create(string name, IEnumerable<RangeStep<TResult>> steps)
     {
