@@ -1,7 +1,11 @@
-﻿namespace Domain.Configuration;
+﻿using System.Text.Json.Serialization;
+
+namespace Domain.Configuration;
 
 public class AppConfig
 {
+    [JsonConstructor]
+    private AppConfig() { }
     public SimulationSettings Simulation { get; set; } = new();
     public StorageSettings Storage { get; set; } = new();
     public QualityCheckerSettings QualityChecker { get; set; } = new();
