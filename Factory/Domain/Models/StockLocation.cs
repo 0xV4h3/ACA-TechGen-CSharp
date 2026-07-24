@@ -9,6 +9,14 @@ namespace Domain.Models;
 public class StockLocation : Entity<StockType, StockState>
 {
     private readonly Dictionary<ItemType, Bin<StockCapacity>> _bins = new();
+    
+    private static readonly StockState[] SeverityOrder =
+    [
+        StockStates.OutOfStock,
+        StockStates.Overstock,
+        StockStates.LowStock,
+        StockStates.Normal
+    ];
 
     public string Name { get; }
 
@@ -19,9 +27,9 @@ public class StockLocation : Entity<StockType, StockState>
         IEnumerable<ItemType> supportedTypes,
         int capacityPerType,
         IRangeConverter<StockCapacity> converter)
-        : base(type, StockStates.Normal)
+        : base(type, StockStates.OutOfStock)
     {
-        registry.Validate(type, StockStates.Normal);
+        registry.Validate(type, StockStates.OutOfStock);
         Name = string.IsNullOrWhiteSpace(name) ? type.Value : name;
 
         foreach (var itemType in supportedTypes)
@@ -37,18 +45,25 @@ public class StockLocation : Entity<StockType, StockState>
     public bool TryStore(Item item)
     {
         bool added = BinFor(item.Type).TryAdd(item);
-        if (added) UpdateState(item.Type);
+        if (added) UpdateState();
         return added;
     }
 
-    private void UpdateState(ItemType type)
+    private void UpdateState()
     {
-        var grade = FillFor(type).Constant;
+        if (State == StockStates.Restricted) return;
 
-        if (grade == StockCapacities.Overloaded) ChangeState(StockStates.Overstock);
-        else if (grade == StockCapacities.Empty) ChangeState(StockStates.OutOfStock);
-        else if (grade == StockCapacities.Low) ChangeState(StockStates.LowStock);
-        else ChangeState(StockStates.Normal);
+        var signals = _bins.Values.Select(bin => GradeToState(bin.Fill.Constant)).ToHashSet();
+        var worst = SeverityOrder.First(signals.Contains);
+        ChangeState(worst);
+    }
+
+    private static StockState GradeToState(StockCapacity grade)
+    {
+        if (grade == StockCapacities.Overloaded) return StockStates.Overstock;
+        if (grade == StockCapacities.Empty) return StockStates.OutOfStock;
+        if (grade == StockCapacities.Low) return StockStates.LowStock;
+        return StockStates.Normal;
     }
 
     private Bin<StockCapacity> BinFor(ItemType type) =>
