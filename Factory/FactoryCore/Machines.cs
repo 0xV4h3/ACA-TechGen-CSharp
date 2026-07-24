@@ -1,30 +1,41 @@
 ﻿using Domain.Constants;
 using Domain.Models;
-using Domain.Registries;
+using Domain.Models.Quality;
 
 namespace FactoryCore;
 
-public class MachineA() : SingleTypeMachine(MachineTypes.MachineA, MachineStates.Idle, ItemTypes.A)
+public class MachineA : SingleTypeMachine
 {
-    protected override Item CreateItem(int id) => new ItemA(id);
-}
-public class MachineB() : SingleTypeMachine(MachineTypes.MachineB, MachineStates.Idle, ItemTypes.B)
-{
-    protected override Item CreateItem(int id) => new ItemB(id);
-}
-public class MachineC() : SingleTypeMachine(MachineTypes.MachineC, MachineStates.Idle, ItemTypes.C)
-{
-    protected override Item CreateItem(int id) => new ItemC(id);
+    public MachineA()
+        : base(MachineTypes.MachineA, MachineStates.Idle, ItemTypes.A) { }
+    
+    public MachineA(IQualityGenerator qualityGenerator) 
+        : base(MachineTypes.MachineA, MachineStates.Idle, ItemTypes.A, qualityGenerator) { }
+
+    protected override Item CreateItem(int id, int qualityPercentage) 
+        => new ItemA(id, qualityPercentage);
 }
 
-public class MachineAB() 
-    : MultiTypeMachine(MachineTypes.Create("MachineAB"), MachineStates.Idle, [ItemTypes.A, ItemTypes.B])
+public class MachineB : SingleTypeMachine
 {
-    protected override Item CreateItem(int id, ItemType type)
-    {
-        if (type == ItemTypes.A) return new ItemA(id);
-        if (type == ItemTypes.B) return new ItemB(id);
+    public MachineB()
+        : base(MachineTypes.MachineB, MachineStates.Idle, ItemTypes.B) { }
+    
+    public MachineB(IQualityGenerator qualityGenerator) 
+        : base(MachineTypes.MachineB, MachineStates.Idle, ItemTypes.B, qualityGenerator) { }
 
-        throw new InvalidOperationException($"MachineAB cannot construct item for type '{type}'.");
-    }
+    protected override Item CreateItem(int id, int qualityPercentage) 
+        => new ItemB(id, qualityPercentage);
+}
+
+public class MachineC : SingleTypeMachine
+{
+    public MachineC()
+        : base(MachineTypes.MachineC, MachineStates.Idle, ItemTypes.C) { }
+    
+    public MachineC(IQualityGenerator qualityGenerator) 
+        : base(MachineTypes.MachineC, MachineStates.Idle, ItemTypes.C, qualityGenerator) { }
+
+    protected override Item CreateItem(int id, int qualityPercentage) 
+        => new ItemC(id, qualityPercentage);
 }
