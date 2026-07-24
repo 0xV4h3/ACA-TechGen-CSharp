@@ -4,7 +4,7 @@ using Domain.Models.Abstractions;
 
 namespace Domain.Models;
 
-public abstract class Item : Entity
+public abstract class Item : Entity<ItemType, ItemState>
 {
     public int Id { get; init; }
     public GradedConstant<ItemQuality> Quality { get; }
