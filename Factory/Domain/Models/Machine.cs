@@ -1,10 +1,15 @@
 ﻿using Domain.Constants;
+using Domain.Models.Quality;
 using Domain.Models.Abstractions;
 
 namespace Domain.Models;
 
-public abstract class Machine(MachineType type, MachineState state) : Entity(type, state), IMachine
+public abstract class Machine(
+    MachineType type, 
+    MachineState state, 
+    IQualityGenerator? qualityGenerator) : Entity<MachineType, MachineState>(type, state), IMachine
 {
+    protected readonly IQualityGenerator QualityGenerator = qualityGenerator ?? new DefaultQualityGenerator();
     protected virtual bool IsMachineReady() => State != MachineStates.Maintenance;
     protected virtual void EnsureMachineIsReady()
     {
@@ -36,30 +41,36 @@ public abstract class Machine(MachineType type, MachineState state) : Entity(typ
 public abstract class SingleTypeMachine(
     MachineType type, 
     MachineState state,
-    ItemType supportedItem) : Machine(type, state), ISingleTypeMachine
+    ItemType supportedItem,
+    IQualityGenerator? qualityGenerator = null) : Machine(type, state, qualityGenerator), ISingleTypeMachine
 {
     public ItemType SupportedItemType { get; } = supportedItem ?? throw new ArgumentNullException(nameof(supportedItem));
     
-    public Item Produce(int id)
+    public Item Produce(int id, int? qualityPercentage = null)
     {
+        int targetQuality = qualityPercentage ?? QualityGenerator.GenerateQuality();
+        
         return RunProductionCycle(
-            createItemLogic: () => CreateItem(id),
-            beforeProduce: () => OnBeforeProduce(id),
+            createItemLogic: () => CreateItem(id, targetQuality),
+            beforeProduce: () => OnBeforeProduce(id, targetQuality),
             afterProduce: OnAfterProduce
         );
     }
 
-    protected virtual void OnBeforeProduce(int id) { }
+    protected virtual void OnBeforeProduce(int id, int qualityPercentage) { }
     protected virtual void OnAfterProduce(Item item) { }
-    protected abstract Item CreateItem(int id);
+    protected abstract Item CreateItem(int id, int qualityPercentage);
 }
 
 public abstract class MultiTypeMachine : Machine, IMultiTypeMachine
 {
     public List<ItemType> SupportedItemTypes { get; } = [];
 
-    protected MultiTypeMachine(MachineType type, MachineState state, List<ItemType> supportedItems) 
-        : base(type, state)
+    protected MultiTypeMachine(
+        MachineType type,
+        MachineState state,
+        List<ItemType> supportedItems,
+        IQualityGenerator? qualityGenerator = null) : base(type, state, qualityGenerator)
     {
         if (supportedItems == null || supportedItems.Count == 0)
             throw new ArgumentException("MultiTypeMachine must support at least one item type.", nameof(supportedItems));
@@ -70,21 +81,23 @@ public abstract class MultiTypeMachine : Machine, IMultiTypeMachine
         SupportedItemTypes.AddRange(supportedItems);
     }
     
-    public Item Produce(int id, ItemType type)
+    public Item Produce(int id, ItemType type, int? qualityPercentage = null)
     {
         if (type == null) throw new ArgumentNullException(nameof(type));
 
         if (!SupportedItemTypes.Contains(type))
             throw new InvalidOperationException($"Machine cannot produce '{type}'.");
+        
+        int targetQuality = qualityPercentage ?? QualityGenerator.GenerateQuality();
 
         return RunProductionCycle(
-            createItemLogic: () => CreateItem(id, type),
-            beforeProduce: () => OnBeforeProduce(id, type),
+            createItemLogic: () => CreateItem(id, type, targetQuality),
+            beforeProduce: () => OnBeforeProduce(id, type, targetQuality),
             afterProduce: OnAfterProduce
         );
     }
 
-    protected virtual void OnBeforeProduce(int id, ItemType type) { }
+    protected virtual void OnBeforeProduce(int id, ItemType type, int qualityPercentage) { }
     protected virtual void OnAfterProduce(Item item) { }
-    protected abstract Item CreateItem(int id, ItemType type);
+    protected abstract Item CreateItem(int id, ItemType type, int qualityPercentage);
 }
