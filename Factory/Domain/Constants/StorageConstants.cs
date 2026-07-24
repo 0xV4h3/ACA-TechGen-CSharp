@@ -9,6 +9,7 @@ public static class StorageTypes
 {
     public static StorageType Create(string value) => new(value);
     
+    public static readonly StorageType Standard = new("Standard");
     public static readonly StorageType StorageA = new("StorageA");
     public static readonly StorageType StorageB = new("StorageB");
     public static readonly StorageType StorageC = new("StorageC");

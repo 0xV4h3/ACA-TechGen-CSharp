@@ -9,6 +9,7 @@ public static class StockTypes
 {
     public static StockType Create(string value) => new(value);
     
+    public static readonly StockType Standard = new("Standard");
     public static readonly StockType StockA = new("StockA");
     public static readonly StockType StockB = new("StockB");
     public static readonly StockType StockC = new("StockC");

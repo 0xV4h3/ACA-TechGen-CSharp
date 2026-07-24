@@ -9,6 +9,7 @@ public static class OrderLineTypes
 {
     public static OrderLineType Create(string value) => new(value);
 
+    public static readonly OrderLineType Standard = new("Standard");
     public static readonly OrderLineType OrderLineA = new("OrderLineA");
     public static readonly OrderLineType OrderLineB = new("OrderLineB");
     public static readonly OrderLineType OrderLineC = new("OrderLineC");

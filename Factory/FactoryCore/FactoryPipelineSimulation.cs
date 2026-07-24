@@ -36,20 +36,20 @@ public sealed class FactoryPipelineSimulation
         var supportedItemTypes = new List<ItemType> { ItemTypes.A, ItemTypes.B, ItemTypes.C };
 
         _orderLine = new OrderLine(
-            OrderLineTypes.OrderLineA,
+            OrderLineTypes.Standard,
             registry,
             _config.Simulation.OrderLineCapacity,
             CapacityConverters.ForOrderLine.Default);
 
         _storage = new Storage(
-            StorageTypes.StorageA,
+            StorageTypes.Standard,
             registry,
             supportedItemTypes,
             _config.Storage.StorageCapacityPerType,
             CapacityConverters.ForStorage.Default);
 
         _stock = new StockLocation(
-            StockTypes.StockA,
+            StockTypes.Standard,
             "Main Stock",
             registry,
             supportedItemTypes,
