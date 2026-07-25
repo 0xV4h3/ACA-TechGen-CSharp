@@ -1,6 +1,3 @@
-using Domain.Constants;
-using Domain.Models.Abstractions;
-
 namespace Domain.Models;
 
 public abstract class TransportVehicle : Entity<TransportType, TransportState>, ITransportVehicle

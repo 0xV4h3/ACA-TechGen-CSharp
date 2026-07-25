@@ -1,6 +1,4 @@
-﻿using Domain.Models.Converters;
-    
-namespace Domain.Registries;
+﻿namespace Domain.Registries;
 
 public abstract class RangeConverterRegistry<TResult>
 {

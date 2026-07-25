@@ -1,8 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Models.Abstractions;
-using Domain.Models.Converters;
-
-namespace Domain.Models;
+﻿namespace Domain.Models;
 
 public sealed class Bin<TCapacityConstant> where TCapacityConstant : CapacityConstant
 {

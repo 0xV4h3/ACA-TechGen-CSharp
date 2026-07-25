@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.Converters;
+﻿namespace Domain.Converters;
 
 public record Range<TResult>(int MinPercentage, int MaxPercentage, TResult Value);
 

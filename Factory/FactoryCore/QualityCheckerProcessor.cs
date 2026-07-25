@@ -1,5 +1,5 @@
 using Domain.Models;
-using Domain.Models.Quality;
+using Domain.Quality;
 using Domain.Simulation;
 
 namespace FactoryCore;

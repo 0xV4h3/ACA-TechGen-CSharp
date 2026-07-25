@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.Converters;
+﻿namespace Domain.Converters;
 
 public record RangeStep<TResult>(int MinPercentage, TResult Value);
 

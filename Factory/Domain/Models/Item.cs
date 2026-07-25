@@ -1,8 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Models.Converters;
-using Domain.Models.Abstractions;
-
-namespace Domain.Models;
+﻿namespace Domain.Models;
 
 public abstract class Item : Entity<ItemType, ItemState>
 {

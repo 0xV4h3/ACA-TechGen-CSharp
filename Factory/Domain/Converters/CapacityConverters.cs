@@ -1,7 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Registries;
-
-namespace Domain.Models.Converters;
+﻿namespace Domain.Converters;
 
 public static class CapacityConverters
 {

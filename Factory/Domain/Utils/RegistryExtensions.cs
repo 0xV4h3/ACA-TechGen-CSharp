@@ -1,8 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Exceptions;
-using Domain.Registries;
-
-namespace Domain.Utils;
+﻿namespace Domain.Utils;
 
 public static class RegistryExtensions
 {

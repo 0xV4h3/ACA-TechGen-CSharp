@@ -1,7 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Exceptions;
-
-namespace Domain.Models.Abstractions;
+﻿namespace Domain.Abstractions;
 
 public abstract class Entity<TType, TState>(TType type, TState state)
     where TType : TypeConstant

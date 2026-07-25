@@ -1,6 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Models.Quality;
-using Domain.Models.Abstractions;
+﻿using Domain.Quality;
 
 namespace Domain.Models;
 

@@ -1,7 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Exceptions;
-
-namespace Domain.Registries;
+﻿namespace Domain.Registries;
 
 public class Registry : IRegistry
 {

@@ -1,6 +1,6 @@
 ﻿using Domain.Constants;
 using Domain.Models;
-using Domain.Models.Converters;
+using Domain.Converters;
 
 namespace FactoryCore;
 

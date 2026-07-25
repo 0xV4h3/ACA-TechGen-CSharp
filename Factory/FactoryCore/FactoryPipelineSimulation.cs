@@ -1,8 +1,8 @@
 using Domain.Configuration;
 using Domain.Constants;
 using Domain.Models;
-using Domain.Models.Converters;
-using Domain.Models.Quality;
+using Domain.Converters;
+using Domain.Quality;
 using Domain.Registries;
 using Domain.Simulation;
 
@@ -84,7 +84,7 @@ public sealed class FactoryPipelineSimulation
             _stats,
             _tickLog.Add);
 
-        var fleet = new List<Domain.Models.Abstractions.ITransportVehicle> { new Truck(), new Ship(), new CargoPlane(), new Motorcycle() };
+        var fleet = new List<Domain.Abstractions.ITransportVehicle> { new Truck(), new Ship(), new CargoPlane(), new Motorcycle() };
         var hub = new TransportHub(fleet, new CheapestSufficientVehicleStrategy());
 
         _transportSchedule = new TransportSchedule(

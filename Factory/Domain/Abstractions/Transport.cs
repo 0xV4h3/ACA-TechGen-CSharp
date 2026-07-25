@@ -1,6 +1,4 @@
-﻿using Domain.Constants;
-
-namespace Domain.Models.Abstractions;
+﻿namespace Domain.Abstractions;
 
 public interface ITransportVehicle
 {

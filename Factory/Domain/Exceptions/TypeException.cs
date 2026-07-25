@@ -1,6 +1,4 @@
-﻿using Domain.Constants;
-
-namespace Domain.Exceptions;
+﻿namespace Domain.Exceptions;
 
 public class TypeException : DomainException
 {

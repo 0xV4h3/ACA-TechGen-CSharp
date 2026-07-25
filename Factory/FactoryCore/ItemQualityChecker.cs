@@ -1,7 +1,7 @@
 using Domain.Constants;
 using Domain.Models;
-using Domain.Models.Quality;
-using Domain.Models.Converters;
+using Domain.Quality;
+using Domain.Converters;
 using Domain.Registries;
 
 namespace FactoryCore;

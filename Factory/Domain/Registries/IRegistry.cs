@@ -1,6 +1,4 @@
-﻿using Domain.Constants;
-
-namespace Domain.Registries;
+﻿namespace Domain.Registries;
 
 public interface IRegistry
 {

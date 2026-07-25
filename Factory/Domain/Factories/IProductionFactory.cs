@@ -1,6 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Models.Quality;
-using Domain.Models;
+﻿using Domain.Quality;
 
 namespace Domain.Factories;
 

@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.Converters;
+﻿namespace Domain.Converters;
 
 public interface IRangeConverter<out TResult>
 {

@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.Quality;
+﻿namespace Domain.Quality;
 
 public enum QualityRoute
 {

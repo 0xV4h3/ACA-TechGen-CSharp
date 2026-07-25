@@ -1,7 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Models.Converters;
-
-namespace Domain.Models.Abstractions;
+﻿namespace Domain.Abstractions;
 
 public sealed class GradedConstant<TConstant> where TConstant : Constant
 {

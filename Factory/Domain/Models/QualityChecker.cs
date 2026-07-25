@@ -1,9 +1,5 @@
-﻿using Domain.Constants;
-using Domain.Registries;
-using Domain.Utils;
-using Domain.Models.Quality;
-using Domain.Models.Converters;
-using Domain.Models.Abstractions;
+﻿using Domain.Utils;
+using Domain.Quality;
 
 namespace Domain.Models;
 
