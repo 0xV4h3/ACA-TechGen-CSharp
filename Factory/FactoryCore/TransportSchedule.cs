@@ -1,5 +1,4 @@
-using Domain.Models;
-using Domain.Simulation;
+using Domain.Ticks;
 
 namespace FactoryCore;
 

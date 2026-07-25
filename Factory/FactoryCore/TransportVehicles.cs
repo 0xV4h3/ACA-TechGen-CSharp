@@ -1,6 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Models;
-namespace FactoryCore;
+﻿namespace FactoryCore;
 
 public sealed class Truck() : TransportVehicle(TransportTypes.Truck, capacity: 6, ticksPerTrip: 2)
 {

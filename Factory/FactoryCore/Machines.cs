@@ -1,8 +1,4 @@
-﻿using Domain.Constants;
-using Domain.Models;
-using Domain.Quality;
-
-namespace FactoryCore;
+﻿namespace FactoryCore;
 
 public class MachineA : SingleTypeMachine
 {

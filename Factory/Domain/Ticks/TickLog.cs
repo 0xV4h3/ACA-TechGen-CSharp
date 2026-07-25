@@ -1,4 +1,4 @@
-namespace FactoryCore;
+namespace Domain.Ticks;
 
 public sealed class TickLog(int maxLines)
 {

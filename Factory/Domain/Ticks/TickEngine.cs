@@ -1,4 +1,4 @@
-namespace Domain.Simulation;
+namespace Domain.Ticks;
 
 public interface ITickable
 {

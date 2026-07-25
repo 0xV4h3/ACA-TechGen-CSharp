@@ -1,5 +1,3 @@
-using Domain.Constants;
-
 namespace FactoryCore;
 
 public sealed class SimulationStats

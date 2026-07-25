@@ -1,6 +1,4 @@
-﻿using Domain.Models;
-using Domain.Factories;
-using Domain.Quality;
+﻿using Domain.Factories;
 using Domain.Registries;
 
 namespace FactoryCore;
