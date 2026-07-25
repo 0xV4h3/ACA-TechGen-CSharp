@@ -2,7 +2,14 @@
 
 public class ProductionSettings
 {
-    public MachineSettings MachineA { get; set; } = new();
-    public MachineSettings MachineB { get; set; } = new();
-    public MachineSettings MachineC { get; set; } = new();
+    public MachineSettings MachineA { get; init; } = new();
+    public MachineSettings MachineB { get; init; } = new();
+    public MachineSettings MachineC { get; init; } = new();
+
+    public void Validate()
+    {
+        MachineA?.Validate();
+        MachineB?.Validate();
+        MachineC?.Validate();
+    }
 }

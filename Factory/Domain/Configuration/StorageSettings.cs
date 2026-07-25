@@ -2,28 +2,12 @@
 
 public class StorageSettings
 {
-    private int _storageCapacityPerType;
-    private int _stockCapacityPerType;
+    public int StorageCapacityPerType { get; init; }
+    public int StockCapacityPerType { get; init; }
 
-    public int StorageCapacityPerType
+    public void Validate()
     {
-        get => _storageCapacityPerType;
-        set
-        {
-            if (value <= 0)
-                throw new ArgumentException("StorageCapacityPerType must be greater than 0.");
-            _storageCapacityPerType = value;
-        }
-    }
-
-    public int StockCapacityPerType
-    {
-        get => _stockCapacityPerType;
-        set
-        {
-            if (value <= 0)
-                throw new ArgumentException("StockCapacityPerType must be greater than 0.");
-            _stockCapacityPerType = value;
-        }
+        if (StorageCapacityPerType <= 0) throw new ArgumentException("StorageCapacityPerType must be greater than 0.");
+        if (StockCapacityPerType <= 0) throw new ArgumentException("StockCapacityPerType must be greater than 0.");
     }
 }

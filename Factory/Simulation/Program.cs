@@ -12,7 +12,7 @@ class Program
 
         PrintWelcome();
 
-        Configuration.Initialize();
+        AppConfig.Initialize(args);
         IRegistry registry = new Registry();
 
         var simulation = new FactoryPipelineSimulation(registry);

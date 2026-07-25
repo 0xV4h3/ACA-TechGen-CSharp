@@ -26,7 +26,7 @@ public sealed class FactoryPipelineSimulation
 
     public FactoryPipelineSimulation(IRegistry registry)
     {
-        _config = Configuration.Settings;
+        _config = AppConfig.Settings;
         _random = new Random(_config.Simulation.RandomSeed);
         _nextItemId = _config.Simulation.StartItemId;
 

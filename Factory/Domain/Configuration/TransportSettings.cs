@@ -2,28 +2,12 @@
 
 public class TransportSettings
 {
-    private int _arrivalIntervalTicks;
-    private int _capacityPerArrival;
+    public int ArrivalIntervalTicks { get; init; }
+    public int CapacityPerArrival { get; init; }
 
-    public int ArrivalIntervalTicks
+    public void Validate()
     {
-        get => _arrivalIntervalTicks;
-        set
-        {
-            if (value <= 0)
-                throw new ArgumentException("ArrivalIntervalTicks must be greater than 0.");
-            _arrivalIntervalTicks = value;
-        }
-    }
-
-    public int CapacityPerArrival
-    {
-        get => _capacityPerArrival;
-        set
-        {
-            if (value <= 0)
-                throw new ArgumentException("CapacityPerArrival must be greater than 0.");
-            _capacityPerArrival = value;
-        }
+        if (ArrivalIntervalTicks <= 0) throw new ArgumentException("ArrivalIntervalTicks must be greater than 0.");
+        if (CapacityPerArrival <= 0) throw new ArgumentException("CapacityPerArrival must be greater than 0.");
     }
 }
