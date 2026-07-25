@@ -9,14 +9,19 @@ public sealed class GradedConstant<TConstant> where TConstant : Constant
     public GradedConstant(IRangeConverter<TConstant> converter, int initialPercentage = 100)
     {
         _converter = converter ?? throw new ArgumentNullException(nameof(converter));
-        Change(initialPercentage);
+        (Percentage, Constant) = ValidateAndConvert(initialPercentage);
     }
 
     public void Change(int newPercentage)
     {
-        if (newPercentage is < 0 or > 100)
-            throw new ArgumentOutOfRangeException(nameof(newPercentage), "Must be between 0 and 100%.");
-        Percentage = newPercentage;
-        Constant = _converter.Convert(newPercentage);
+        (Percentage, Constant) = ValidateAndConvert(newPercentage);
+    }
+
+    private (int percent, TConstant constant) ValidateAndConvert(int percent)
+    {
+        if (percent is < 0 or > 100) 
+            throw new ArgumentOutOfRangeException(nameof(percent));
+        
+        return (percent, _converter.Convert(percent));
     }
 }
