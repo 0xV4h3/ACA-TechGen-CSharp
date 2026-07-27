@@ -1,0 +1,80 @@
+﻿namespace Domain.Registries;
+
+public class Registry : IRegistry
+{
+    private readonly Dictionary<string, Context> _contexts = new(StringComparer.OrdinalIgnoreCase);
+
+    public Registry()
+    {
+        AutoDiscoverContexts();
+    }
+
+    private void AutoDiscoverContexts()
+    {
+        foreach (var context in Contexts.All)
+        {
+            RegisterContext(context);
+        }
+    }
+
+    public bool RegisterContext(Context context)
+    {
+        if (context == null) throw new ArgumentNullException(nameof(context));
+        
+        return _contexts.TryAdd(context.Name, context);
+    }
+
+    public bool Register(Constant constant, bool autoRegisterContext = false)
+    {
+        if (constant == null) throw new ArgumentNullException(nameof(constant));
+
+        var contextName = constant.Context.Name;
+
+        if (!_contexts.TryGetValue(contextName, out var registeredContext))
+        {
+            if (autoRegisterContext)
+            {
+                registeredContext = constant.Context;
+                RegisterContext(registeredContext);
+            }
+            else
+            {
+                throw new ContextException(
+                    $"Context '{constant.Context.Name}' is not registered. Set autoRegisterContext to true to register it automatically.", 
+                    constant.Context);
+            }
+        }
+        
+        if (registeredContext.IsValid(constant.Value, constant.Kind))
+            return false;
+        
+        registeredContext.AddConstant(constant, constant.Kind);
+        return true;
+    }
+    
+    public bool IsValid(string value, Context context, ConstantKind kind)
+    {
+        return _contexts.TryGetValue(context.Name, out var registeredContext) 
+               && registeredContext.IsValid(value, kind);
+    }
+
+    public Constant? Get(string constantValue, Context context, ConstantKind kind)
+    {
+        return _contexts.TryGetValue(context.Name, out var registeredContext)
+            ? registeredContext.Get(constantValue, kind) : null;
+    }
+    
+    public IEnumerable<Constant> GetAll(Context context, ConstantKind kind)
+    {
+        return _contexts.TryGetValue(context.Name, out var registeredContext) 
+            ? registeredContext.GetAll(kind) 
+            : [];
+    }
+
+    public IEnumerable<string> GetAllString(Context context, ConstantKind kind)
+    {
+        return _contexts.TryGetValue(context.Name, out var registeredContext) 
+            ? registeredContext.GetAllString(kind) 
+            : [];
+    }
+}
