@@ -7,12 +7,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        var (beforeOne, afterOne) = Test1();
-        PrintOrderDiff(beforeOne, afterOne);
-        var (beforeTwo, afterTwo) = Test2();
-        PrintOrderDiff(beforeTwo, afterTwo);
-        var (beforeThree, afterThree) = Test3();
-        PrintOrderDiff(beforeThree, afterThree);
+        Test1();
+        Test2();
+        Test3();
     }
     static void PrintOrderDiff(Order before, Order after)
     {
@@ -23,7 +20,7 @@ class Program
             Console.WriteLine($"{c.Path} | {c.Old} | {c.New}");
     }
 
-    static (Order Before, Order After) Test1()
+    static void Test1()
     {
         var beforeOrder = new Order 
         { 
@@ -47,10 +44,10 @@ class Program
             RowVersion = [ 9, 9, 9 ] 
         };
 
-        return (beforeOrder, afterOrder);
+        PrintOrderDiff(beforeOrder, afterOrder);
     }
 
-    static (Order before, Order after) Test2()
+    static void Test2()
     {
         var beforeOrder = new Order 
         { 
@@ -74,10 +71,10 @@ class Program
             RowVersion = [ 7, 7, 7 ] 
         };
 
-        return (beforeOrder, afterOrder);
+        PrintOrderDiff(beforeOrder, afterOrder);
     }
 
-    static (Order before, Order after) Test3()
+    static void Test3()
     {
         var beforeOrder = new Order 
         { 
@@ -101,6 +98,6 @@ class Program
             RowVersion = [ 7, 7, 7 ] 
         };
 
-        return (beforeOrder, afterOrder);
+        PrintOrderDiff(beforeOrder, afterOrder);
     }
 }
