@@ -7,7 +7,7 @@ public static class AuditDiffer
 {
     private static readonly ConcurrentDictionary<Type, PropertyMetadata[]> PropertyCache = new();
 
-    public static IReadOnlyList<AuditChange> Diff(object? before, object? after, string rootPath = "Order")
+    public static IReadOnlyList<AuditChange> Diff(object? before, object? after, string rootPath)
     {
         var changes = new List<AuditChange>();
         
