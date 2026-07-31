@@ -55,7 +55,7 @@ class Program
             CustomerName = "Anna", 
             Status = "Paid", 
             Total = new Money { Amount = 40m, Currency = "USD" }, 
-            Lines = [ new() { Sku = "MILK-9", Quantity = 1 } ], 
+            Lines = [ new() { Sku = "TEA-1", Quantity = 5 }, new OrderLine() { Sku = "MILK-9", Quantity = 1 } ], 
             Tags = [ "eco", "milk" ], 
             RowVersion = [ 4, 5, 6 ] 
         };
@@ -66,7 +66,7 @@ class Program
             CustomerName = "Anna", 
             Status = "Paid", 
             Total = new Money { Amount = 40m, Currency = "USD" }, 
-            Lines = [], 
+            Lines = [ new() { Sku = "TEA-1", Quantity = 5 }, new OrderLine() ],
             Tags = [ "eco", "milk" ], 
             RowVersion = [ 7, 7, 7 ] 
         };
