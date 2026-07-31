@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcaWrapperPriceEngine", "AcaWrapperPriceEngine\AcaWrapperPriceEngine.csproj", "{8B0BEB56-0E91-413D-9BD5-FE16611209CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceApp", "PriceApp\PriceApp.csproj", "{F366C0ED-CCDC-48DB-BF5B-B47D84890919}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B0BEB56-0E91-413D-9BD5-FE16611209CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B0BEB56-0E91-413D-9BD5-FE16611209CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B0BEB56-0E91-413D-9BD5-FE16611209CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B0BEB56-0E91-413D-9BD5-FE16611209CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F366C0ED-CCDC-48DB-BF5B-B47D84890919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F366C0ED-CCDC-48DB-BF5B-B47D84890919}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F366C0ED-CCDC-48DB-BF5B-B47D84890919}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F366C0ED-CCDC-48DB-BF5B-B47D84890919}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

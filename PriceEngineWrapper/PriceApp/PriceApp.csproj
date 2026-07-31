@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AcaWrapperPriceEngine\AcaWrapperPriceEngine.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="ACA.PriceEngine">
+        <HintPath>..\ACA.PriceEngine.dll\ACA.PriceEngine.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>
