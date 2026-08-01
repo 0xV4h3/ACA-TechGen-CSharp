@@ -10,10 +10,12 @@ class Program
         Test1();
         Test2();
         Test3();
+        Test4();
     }
-    static void PrintOrderDiff(Order before, Order after)
+    
+    static void PrintDiff<T>(T before, T after)
     {
-        var changes = AuditDiffer.Diff(before, after, "Order");
+        var changes = AuditDiffer.Diff(before, after, typeof(T).Name);
 
         Console.WriteLine("Path | Old | New");
         foreach (var c in changes)
@@ -44,7 +46,7 @@ class Program
             RowVersion = [ 9, 9, 9 ] 
         };
 
-        PrintOrderDiff(beforeOrder, afterOrder);
+        PrintDiff(beforeOrder, afterOrder);
     }
 
     static void Test2()
@@ -71,7 +73,7 @@ class Program
             RowVersion = [ 7, 7, 7 ] 
         };
 
-        PrintOrderDiff(beforeOrder, afterOrder);
+        PrintDiff(beforeOrder, afterOrder);
     }
 
     static void Test3()
@@ -98,6 +100,16 @@ class Program
             RowVersion = [ 7, 7, 7 ] 
         };
 
-        PrintOrderDiff(beforeOrder, afterOrder);
+        PrintDiff(beforeOrder, afterOrder);
+    }
+
+    static void Test4()
+    {
+        var n1 = new Node { Name = "draft" };
+        n1.Next = n1;
+        var n2 = new Node { Name = "final" };
+        n2.Next = n2;
+
+        PrintDiff(n1, n2);
     }
 }
