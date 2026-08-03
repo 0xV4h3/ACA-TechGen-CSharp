@@ -10,8 +10,8 @@ class Program
     {
         var products = new List<ProductRow>
         {
-            new() { Sku = "TEA-1", Name = "Armenian Tea", Price = 4.50m, InStock = true,  WarehouseCode = "WH-A" }
-            // new() { Sku = "COF-2", Name = "Coffee, Premium", Price = 9.99m, InStock = false, WarehouseCode = "WH-B" }
+            new() { Sku = "TEA-1", Name = "Armenian Tea", Price = 4.50m, InStock = true,  WarehouseCode = "WH-A" },
+            new() { Sku = "COF-2", Name = "Coffee, Premium", Price = 9.99m, InStock = false, WarehouseCode = "WH-B" }
         };
 
         var csv = CsvSerializer.WriteAll(products);

@@ -20,7 +20,7 @@ public static class CsvSerializer
         var plans = GetPlan(typeof(T));
         var sb = new StringBuilder();
         
-        sb.AppendLine(string.Join(",", plans.Select(p => p.Header)));
+        sb.AppendLine(string.Join(",", plans.Select(p => EscapeCell(p.Header))));
         
         foreach (var row in rows)
         {
@@ -30,7 +30,6 @@ public static class CsvSerializer
                 var value = plans[i].Property.GetValue(row);
                 cells[i] = EscapeCell(FormatValue(value));
             }
-
             sb.AppendLine(string.Join(",", cells));
         }
 
@@ -60,9 +59,6 @@ public static class CsvSerializer
         for (int lineIndex = 1; lineIndex < lines.Count; lineIndex++)
         {
             var cells = SplitCsvLine(lines[lineIndex]);
-            if (cells.Count == 1 && cells[0].Length == 0)
-                continue;
-
             var item = new T();
 
             foreach (var plan in plans)
@@ -90,11 +86,12 @@ public static class CsvSerializer
             return cached;
 
         var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-        var list = new List<ColumnPlan>(props.Length);
 
+        var list = new List<ColumnPlan>(props.Length);
         for (int i = 0; i < props.Length; i++)
         {
             var p = props[i];
+
             if (!p.CanRead) continue;
             if (p.GetIndexParameters().Length != 0) continue;
             if (p.GetCustomAttribute<CsvIgnoreAttribute>() is not null) continue;
@@ -110,7 +107,7 @@ public static class CsvSerializer
             .OrderBy(x => x.Order)
             .ThenBy(x => x.DeclarationIndex)
             .ToArray();
-
+        
         return PlanCache.GetOrAdd(type, plan);
     }
 
@@ -148,23 +145,108 @@ public static class CsvSerializer
 
         return Convert.ChangeType(raw, type, CultureInfo.InvariantCulture);
     }
-
+    
     private static string EscapeCell(string cell)
     {
-        if (cell.Contains(',') || cell.Contains('"') || cell.Contains('\n') || cell.Contains('\r'))
-            throw new InvalidOperationException(
-                "CSV Serializer does not support quoted cells.");
+        var mustQuote =
+            cell.Contains(',') ||
+            cell.Contains('"') ||
+            cell.Contains('\n') ||
+            cell.Contains('\r');
 
-        return cell;
+        if (!mustQuote) return cell;
+
+        var escaped = cell.Replace("\"", "\"\"");
+        return $"\"{escaped}\"";
     }
     
-    private static List<string> SplitCsvLine(string line) => line.Split(',').Select(x => x.Trim()).ToList();
+    private static List<string> SplitCsvLine(string line)
+    {
+        var cells = new List<string>();
+        var sb = new StringBuilder();
+        bool inQuotes = false;
+
+        for (int i = 0; i < line.Length; i++)
+        {
+            var ch = line[i];
+
+            if (inQuotes)
+            {
+                if (ch == '"')
+                {
+                    if (i + 1 < line.Length && line[i + 1] == '"')
+                    {
+                        sb.Append('"');
+                        i++;
+                    }
+                    else
+                    {
+                        inQuotes = false;
+                    }
+                }
+                else
+                {
+                    sb.Append(ch);
+                }
+            }
+            else
+            {
+                if (ch == ',')
+                {
+                    cells.Add(sb.ToString());
+                    sb.Clear();
+                }
+                else if (ch == '"')
+                {
+                    inQuotes = true;
+                }
+                else
+                {
+                    sb.Append(ch);
+                }
+            }
+        }
+
+        cells.Add(sb.ToString());
+        return cells;
+    }
     
     private static IEnumerable<string> ReadCsvRecords(string csv)
     {
-        using var sr = new StringReader(csv);
-        string? line;
-        while ((line = sr.ReadLine()) != null)
-            yield return line;
+        var sb = new StringBuilder();
+        bool inQuotes = false;
+
+        for (int i = 0; i < csv.Length; i++)
+        {
+            char ch = csv[i];
+
+            if (ch == '"')
+            {
+                if (inQuotes && i + 1 < csv.Length && csv[i + 1] == '"')
+                {
+                    sb.Append('"');
+                    i++;
+                }
+                else
+                {
+                    inQuotes = !inQuotes;
+                    sb.Append(ch);
+                }
+            }
+            else if ((ch == '\n' || ch == '\r') && !inQuotes)
+            {
+                if (ch == '\r' && i + 1 < csv.Length && csv[i + 1] == '\n') i++;
+                var record = sb.ToString();
+                sb.Clear();
+                if (record.Length > 0) yield return record;
+            }
+            else
+            {
+                sb.Append(ch);
+            }
+        }
+
+        if (sb.Length > 0)
+            yield return sb.ToString();
     }
 }
