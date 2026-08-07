@@ -1,8 +1,8 @@
 ﻿namespace Engine;
 
-[AttributeUsage(AttributeTargets.Method)]
-public sealed class TestAttribute(int parameters, int expectedResult) : Attribute
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+public sealed class TestAttribute(object? expectedResult, params object?[] parameters) : Attribute
 {
-    public int Parameters { get; } = parameters;
-    public int ExpectedResult { get; } = expectedResult;
+    public object? ExpectedResult { get; } = expectedResult;
+    public object?[] Parameters { get; } = parameters;
 }
