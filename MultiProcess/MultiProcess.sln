@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Math", "Math\Math.csproj", "{D2881619-69BD-4A35-8DD1-0AD721798A1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathExecutor", "MathExecutor\MathExecutor.csproj", "{71DB55A2-A4E3-4A7A-B303-0FF2742ABA92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{971EB68E-5509-47DE-ABCF-DE3A6A6F8AEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2881619-69BD-4A35-8DD1-0AD721798A1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2881619-69BD-4A35-8DD1-0AD721798A1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2881619-69BD-4A35-8DD1-0AD721798A1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2881619-69BD-4A35-8DD1-0AD721798A1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71DB55A2-A4E3-4A7A-B303-0FF2742ABA92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71DB55A2-A4E3-4A7A-B303-0FF2742ABA92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71DB55A2-A4E3-4A7A-B303-0FF2742ABA92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71DB55A2-A4E3-4A7A-B303-0FF2742ABA92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{971EB68E-5509-47DE-ABCF-DE3A6A6F8AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{971EB68E-5509-47DE-ABCF-DE3A6A6F8AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{971EB68E-5509-47DE-ABCF-DE3A6A6F8AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{971EB68E-5509-47DE-ABCF-DE3A6A6F8AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
