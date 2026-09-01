@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
-using WelcomePage.Models;
+using WelcomePage.Data;
+using WelcomePage.DTOs;
+using WelcomePage.Repositories;
 using WelcomePage.Services;
 
 namespace WelcomePage;
@@ -8,19 +10,21 @@ class Program
 {
     static void Main(string[] args)
     {
+        var dbContext = new DbContext();
+        dbContext.InitializeDatabase();
+
+        var userRepository = new UserRepository(dbContext);
         var passwordService = new BcryptPasswordService();
-        var userService = new UserService(passwordService);
-        
-        userService.InitializeDatabase();
+
+        IUserService userService = new UserService(userRepository, passwordService);
 
         while (true)
         {
-            // Console.Clear();
             Console.WriteLine("Welcome page");
             Console.WriteLine("Select: ");
             Console.WriteLine("1 - Register");
             Console.WriteLine("2 - Login");
-            Console.WriteLine("3 - Change Password?");
+            Console.WriteLine("3 - Change Password");
             Console.WriteLine("4 - Delete Account");
             Console.WriteLine("5 - Exit");
             
@@ -56,7 +60,8 @@ class Program
                     
                     Console.Write("Password: ");
                     string password = Console.ReadLine();
-                    if (!userService.RegisterUser(userName, firstName, lastName, dateOfBirth, password))
+                    var newUser = new UserRegisterDto(userName, firstName, lastName, dateOfBirth, password);
+                    if (!userService.Register(newUser))
                     {
                         Console.WriteLine("Something went wrong");
                     }
@@ -72,7 +77,7 @@ class Program
                     Console.Write("Password: ");
                     string loginPassword = Console.ReadLine();
                     
-                    var user = userService.LoginUser(loginName, loginPassword);
+                    var user = userService.Login(loginName, loginPassword);
                     if (user is null)
                         Console.WriteLine("Something not found");
                     else
