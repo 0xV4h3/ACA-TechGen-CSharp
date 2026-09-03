@@ -14,6 +14,6 @@ public record UserRegisterDto(
     string UserName,
     string FirstName,
     string LastName,
-        DateOnly DateOfBirth,
+    DateOnly DateOfBirth,
     string Password
 );

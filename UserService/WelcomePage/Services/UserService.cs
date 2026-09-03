@@ -1,12 +1,20 @@
-﻿using WelcomePage.DTOs;
+﻿using System;
+using WelcomePage.Data;
+using WelcomePage.DTOs;
 using WelcomePage.Models;
 using WelcomePage.Repositories;
 
 namespace WelcomePage.Services;
 
-public class UserService(IUserRepository userRepository, BcryptPasswordService passwordService) : IUserService
+public class UserService(
+    DbContext dbContext,
+    IUserRepository userRepository, 
+    IFriendRepository friendRepository,
+    BcryptPasswordService passwordService) : IUserService
 {
+    private readonly DbContext _dbContext = dbContext;
     private readonly IUserRepository _userRepository = userRepository;
+    private readonly IFriendRepository _friendRepository = friendRepository;
     private readonly BcryptPasswordService _passwordService = passwordService;
 
     public bool Register(UserRegisterDto dto)
@@ -33,12 +41,20 @@ public class UserService(IUserRepository userRepository, BcryptPasswordService p
         var user = _userRepository.GetByUserName(userName);
         if (user is null) return null;
 
-        if (!_passwordService.VerifyPassword(providedPassword, user.PasswordHash))
+        if (!_passwordService.VerifyPassword(providedPassword, user.PasswordHash)) 
         {
             return null;
         }
 
-        return MapToDto(user);
+        return new UserResponseDto(
+            user.Id, 
+            user.UserName, 
+            user.FirstName, 
+            user.LastName, 
+            user.DateOfBirth, 
+            user.CreatedAt, 
+            user.UpdatedAt
+        );
     }
 
     public bool ChangePassword(string userName, string oldPassword, string newPassword)
@@ -66,6 +82,62 @@ public class UserService(IUserRepository userRepository, BcryptPasswordService p
         return _userRepository.Delete(userName);
     }
 
-    private static UserResponseDto MapToDto(User user) =>
-        new(user.Id, user.UserName, user.FirstName, user.LastName, user.DateOfBirth, user.CreatedAt, user.UpdatedAt);
+    public bool AddFriend(int currentUserId, string friendUserName)
+    {
+        var friend = _userRepository.GetByUserName(friendUserName);
+        if (friend is null)
+        {
+            Console.WriteLine($"[ERROR] User with username '{friendUserName}' not found.");
+            return false;
+        }
+
+        int friendId = friend.Id;
+
+        if (currentUserId == friendId)
+        {
+            Console.WriteLine("[ERROR] You cannot be friends with yourself.");
+            return false;
+        }
+
+        if (_friendRepository.AreFriends(currentUserId, friendId))
+        {
+            Console.WriteLine($"[ERROR] You are already friends with '{friendUserName}'.");
+            return false;
+        }
+
+        using var connection = _dbContext.CreateConnection();
+        connection.Open();
+        using var transaction = connection.BeginTransaction();
+
+        try
+        {
+            _friendRepository.AddFriendshipPair(currentUserId, friendId, transaction);
+            _friendRepository.AddFriendshipPair(friendId, currentUserId, transaction);
+
+            transaction.Commit();
+            Console.WriteLine($"[SUCCESS] You and '{friendUserName}' are now friends!");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            transaction.Rollback();
+            Console.WriteLine($"[TRANSACTION ROLLBACK] Failed to create friendship: {ex.Message}");
+            return false;
+        }
+    }
+    
+    public List<UserResponseDto> GetFriends(int userId)
+    {
+        var friends = _friendRepository.GetFriendsByUserId(userId);
+    
+        return friends.Select(f => new UserResponseDto(
+            f.Id, 
+            f.UserName, 
+            f.FirstName, 
+            f.LastName, 
+            f.DateOfBirth, 
+            f.CreatedAt, 
+            f.UpdatedAt
+        )).ToList();
+    }
 }

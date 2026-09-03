@@ -8,4 +8,6 @@ public interface IUserService
     UserResponseDto? Login(string userName, string providedPassword);
     bool ChangePassword(string userName, string oldPassword, string newPassword);
     bool DeleteUser(string userName, string providedPassword);
+    bool AddFriend(int currentUserId, string friendUserName);
+    List<UserResponseDto> GetFriends(int userId);
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System.Data;
+using Npgsql;
 using WelcomePage.Data;
 using WelcomePage.Models;
 
@@ -15,23 +16,23 @@ public class UserRepository(DbContext dbContext) : IUserRepository
             using var connection = _dbContext.CreateConnection();
             connection.Open();
 
-            var command = connection.CreateCommand();
+            using var command = connection.CreateCommand();
             command.CommandText = @"
-                INSERT INTO Users (UserName, FirstName, LastName, DateOfBirth, PasswordHash, CreatedAt, UpdatedAt) 
-                VALUES ($userName, $firstName, $lastName, $dateOfBirth, $passwordHash, $createdAt, $updatedAt)";
+                INSERT INTO Users (Username, PasswordHash, FirstName, LastName, DateOfBirth, CreatedAt, UpdatedAt) 
+                VALUES (@userName, @passwordHash, @firstName, @lastName, @dateOfBirth, @createdAt, @updatedAt)";
 
-            command.Parameters.AddWithValue("$userName", user.UserName);
-            command.Parameters.AddWithValue("$firstName", user.FirstName);
-            command.Parameters.AddWithValue("$lastName", user.LastName);
-            command.Parameters.AddWithValue("$dateOfBirth", user.DateOfBirth.ToString("yyyy-MM-dd"));
-            command.Parameters.AddWithValue("$passwordHash", user.PasswordHash);
-            command.Parameters.AddWithValue("$createdAt", user.CreatedAt.ToString("o"));
-            command.Parameters.AddWithValue("$updatedAt", user.UpdatedAt.ToString("o"));
+            AddParameter(command, "@userName", user.UserName);
+            AddParameter(command, "@passwordHash", user.PasswordHash);
+            AddParameter(command, "@firstName", user.FirstName);
+            AddParameter(command, "@lastName", user.LastName);
+            AddParameter(command, "@dateOfBirth", user.DateOfBirth.ToString("yyyy-MM-dd"));
+            AddParameter(command, "@createdAt", user.CreatedAt);
+            AddParameter(command, "@updatedAt", user.UpdatedAt);
 
             command.ExecuteNonQuery();
             return true;
         }
-        catch (SqliteException ex) when (ex.SqliteErrorCode == 19)
+        catch (PostgresException ex) when (ex.SqlState == "23505")
         {
             return false;
         }
@@ -42,25 +43,29 @@ public class UserRepository(DbContext dbContext) : IUserRepository
         using var connection = _dbContext.CreateConnection();
         connection.Open();
 
-        var command = connection.CreateCommand();
-        command.Connection = connection;
-        command.CommandText = "SELECT Id, UserName, FirstName, LastName, DateOfBirth, PasswordHash, CreatedAt, UpdatedAt FROM Users WHERE UserName = $userName";
-        command.Parameters.AddWithValue("$userName", userName);
+        using var command = connection.CreateCommand();
+        command.CommandText = "SELECT UserId, Username, FirstName, LastName, DateOfBirth, PasswordHash, CreatedAt, UpdatedAt FROM Users WHERE Username = @userName";
+        AddParameter(command, "@userName", userName);
 
         using var reader = command.ExecuteReader();
         if (!reader.Read()) return null;
 
-        return new User
-        {
-            Id = reader.GetInt32(0),
-            UserName = reader.GetString(1),
-            FirstName = reader.GetString(2),
-            LastName = reader.GetString(3),
-            DateOfBirth = DateOnly.Parse(reader.GetString(4)),
-            PasswordHash = reader.GetString(5),
-            CreatedAt = DateTime.Parse(reader.GetString(6)),
-            UpdatedAt = DateTime.Parse(reader.GetString(7))
-        };
+        return MapReaderToUser(reader);
+    }
+
+    public User? GetById(int id)
+    {
+        using var connection = _dbContext.CreateConnection();
+        connection.Open();
+
+        using var command = connection.CreateCommand();
+        command.CommandText = "SELECT UserId, Username, FirstName, LastName, DateOfBirth, PasswordHash, CreatedAt, UpdatedAt FROM Users WHERE UserId = @id";
+        AddParameter(command, "@id", id);
+
+        using var reader = command.ExecuteReader();
+        if (!reader.Read()) return null;
+
+        return MapReaderToUser(reader);
     }
 
     public bool UpdatePassword(string userName, string newPasswordHash, DateTime updatedAt)
@@ -68,14 +73,13 @@ public class UserRepository(DbContext dbContext) : IUserRepository
         using var connection = _dbContext.CreateConnection();
         connection.Open();
 
-        var command = connection.CreateCommand();
-        command.CommandText = "UPDATE Users SET PasswordHash = $newHash, UpdatedAt = $updatedAt WHERE UserName = $userName";
-        command.Parameters.AddWithValue("$newHash", newPasswordHash);
-        command.Parameters.AddWithValue("$updatedAt", updatedAt.ToString("o"));
-        command.Parameters.AddWithValue("$userName", userName);
+        using var command = connection.CreateCommand();
+        command.CommandText = "UPDATE Users SET PasswordHash = @newHash, UpdatedAt = @updatedAt WHERE Username = @userName";
+        AddParameter(command, "@newHash", newPasswordHash);
+        AddParameter(command, "@updatedAt", updatedAt);
+        AddParameter(command, "@userName", userName);
 
-        int rowsAffected = command.ExecuteNonQuery();
-        return rowsAffected > 0;
+        return command.ExecuteNonQuery() > 0;
     }
 
     public bool Delete(string userName)
@@ -83,11 +87,30 @@ public class UserRepository(DbContext dbContext) : IUserRepository
         using var connection = _dbContext.CreateConnection();
         connection.Open();
 
-        var command = connection.CreateCommand();
-        command.CommandText = "DELETE FROM Users WHERE UserName = $userName";
-        command.Parameters.AddWithValue("$userName", userName);
+        using var command = connection.CreateCommand();
+        command.CommandText = "DELETE FROM Users WHERE Username = @userName";
+        AddParameter(command, "@userName", userName);
 
-        int rowsAffected = command.ExecuteNonQuery();
-        return rowsAffected > 0;
+        return command.ExecuteNonQuery() > 0;
     }
+
+    private static void AddParameter(IDbCommand command, string name, object value)
+    {
+        var parameter = command.CreateParameter();
+        parameter.ParameterName = name;
+        parameter.Value = value;
+        command.Parameters.Add(parameter);
+    }
+
+    private static User MapReaderToUser(IDataReader reader) => new()
+    {
+        Id = reader.GetInt32(0),
+        UserName = reader.GetString(1),
+        FirstName = reader.GetString(2),
+        LastName = reader.GetString(3),
+        DateOfBirth = DateOnly.Parse(reader.GetString(4)),
+        PasswordHash = reader.GetString(5),
+        CreatedAt = reader.GetDateTime(6),
+        UpdatedAt = reader.GetDateTime(7)
+    };
 }
