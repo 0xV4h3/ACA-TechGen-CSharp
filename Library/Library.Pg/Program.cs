@@ -19,9 +19,9 @@ class Program
 
             RunUpdatesAndDeletes(db);
 
-            BonusSection(db);
+            await BonusSection(db);
 
-            await PostgreSqlSpecificsAsync(db);
+            PostgreSqlSpecificsAsync(db);
         }
     }
     
@@ -155,7 +155,7 @@ class Program
         Console.WriteLine();
     }
 
-    private static void BonusSection(LibraryContext db)
+    private static async Task BonusSection(LibraryContext db)
     {
         Console.WriteLine("=== 6.1 Print SQL using ToQueryString() ===");
         var queryString = db.Books.Where(b => b.Year > 2005).OrderBy(b => b.Title).ToQueryString();
@@ -171,8 +171,25 @@ class Program
         Console.WriteLine("\n=== 6.3 Dynamic Search Method ===");
         var searchResults = Search(db, 2000, "Martin", null);
         Console.WriteLine($"Search results count: {searchResults.Count}\n");
+        
+        await RunAsyncOperations(db);
     }
 
+    private static async Task RunAsyncOperations(LibraryContext db)
+    {
+        Console.WriteLine("=== 6.4 Async Operations ===");
+    
+        var asyncList = await db.Books.ToListAsync();
+        var asyncCount = await db.Books.CountAsync();
+        var asyncAny = await db.Books.AnyAsync(b => b.IsRead);
+        var asyncFirst = await db.Books.FirstAsync();
+        var asyncSingle = await db.Books.SingleAsync(b => b.Title == "Clean Code");
+        var asyncSum = await db.Books.Where(b => !b.IsRead).SumAsync(b => b.Price);
+
+        Console.WriteLine($"Async Execution Complete. Loaded {asyncList.Count} books.");
+        Console.WriteLine($"Total count: {asyncCount}, Any read: {asyncAny}, Single title: {asyncSingle.Title}, Sum price: {asyncSum}");
+    }
+    
     public static List<Book> Search(LibraryContext db, int? minYear, string? author, bool? isRead)
     {
         IQueryable<Book> query = db.Books;
@@ -195,7 +212,7 @@ class Program
         return query.ToList();
     }
 
-    private static async Task PostgreSqlSpecificsAsync(LibraryContext db)
+    private static void PostgreSqlSpecificsAsync(LibraryContext db)
     {
         Console.WriteLine("=== 7.1 DateTime UTC Requirement ===");
         try
@@ -234,13 +251,5 @@ class Program
         {
             Console.WriteLine($"{item.Author}: {item.Count} books, Total: {item.Total}");
         }
-
-        Console.WriteLine("\n=== 6.4 Async Operations ===");
-        var asyncList = await db.Books.ToListAsync();
-        var asyncCount = await db.Books.CountAsync();
-        var asyncAny = await db.Books.AnyAsync(b => b.IsRead);
-        var asyncFirst = await db.Books.FirstAsync();
-        var asyncSum = await db.Books.Where(b => !b.IsRead).SumAsync(b => b.Price);
-        Console.WriteLine($"Async Execution Complete. Loaded {asyncList.Count} books asynchronously.");
     }
 }
